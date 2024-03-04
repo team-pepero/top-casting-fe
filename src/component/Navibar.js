@@ -10,7 +10,7 @@ function Navibar() {
         <AppBar position="static">
             <Toolbar>
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    My Website
+                    TopCasting
                 </Typography>
                 <Button color="inherit" href="/">Home</Button>
                 <Button color="inherit" href="/join">회원가입</Button>
