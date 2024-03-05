@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { Container, TextField, Button, Typography, Grid } from '@mui/material';
+import { Container, TextField, Button, Typography, Grid, imageListClasses } from '@mui/material';
 import { HttpPost } from '../service/HttpService';
 import DaumPostcode from 'react-daum-postcode';
+import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -45,9 +47,16 @@ function SignUp() {
     e.preventDefault();
     // 회원가입 로직 처리
     HttpPost('http://localhost:8080/api/v1/auth/join', formData)
-
-    console.log('join\n');
-    console.log(formData);
+    .then( (response) => {
+      alert("회원가입 성공")
+      navigate("/login");
+    }).catch((error) => {
+      console.log("================== join error =================");
+      console.log(error);
+      if(typeof error.response.data === 'string'){
+        alert(error.response.data);
+      }
+    }); 
   };
 
   return (
