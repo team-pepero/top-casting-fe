@@ -14,7 +14,8 @@ function SignUp() {
     nickname: '',
     email: '',
     birthDate: '',
-    address: '',
+    address1: '',
+    address2: '',
     zipcode: '',
     phoneNumber: '',
   });
@@ -32,7 +33,7 @@ function SignUp() {
     console.log(data);
     setFormData({
       ...formData,
-      address: data.address,
+      address1: data.address,
       zipcode: data.zonecode,
     });
     console.log(formData);
@@ -46,6 +47,7 @@ function SignUp() {
   const handleSubmit = (e) => {
     e.preventDefault();
     // 회원가입 로직 처리
+    console.log(formData);
     HttpPost('http://localhost:8080/api/v1/auth/join', formData)
     .then( (response) => {
       alert("회원가입 성공")
@@ -187,15 +189,26 @@ function SignUp() {
           </Grid>
           <Grid item xs={12}>
             <TextField
-              name="address"
+              name="address1"
               variant="outlined"
               required
               fullWidth
-              id="address"
+              id="address1"
               label="Address"
-              autoComplete="address-level1"
-              value={formData.address}
+              value={formData.address1}
               onClick={openModal}
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              name="address2"
+              variant="outlined"
+              required
+              fullWidth
+              id="address2"
+              label="상세 주소"
+              value={formData.address2}
               onChange={handleChange}
             />
           </Grid>

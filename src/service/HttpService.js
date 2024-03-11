@@ -9,6 +9,10 @@ const apiInstance = axios.create({
   withCredentials: true,
 });
 
+
+
+export default apiInstance;
+
 export const HttpGet = async (url, params = null) => {
   try {
     const response = await apiInstance.get(url, { params });
