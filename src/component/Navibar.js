@@ -18,7 +18,7 @@ function Navibar() {
                     TopCasting
                 </Typography>
                 {/* 공통 */}
-                <Button color="inherit" component={Link} to="/login">Home</Button>
+                <Button color="inherit" component={Link} to="/">Home</Button>
                 {isLogin ? 
                 <>
                 <Button color="inherit" component={Link} onClick={() => logout()}>로그아웃</Button>
