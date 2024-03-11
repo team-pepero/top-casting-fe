@@ -1,10 +1,20 @@
-import React, { useState } from 'react';
-import { Container, TextField, Button, Typography, Grid } from '@mui/material';
+import React, { useState, useContext } from 'react';
+import { Container, TextField, Button, Typography } from '@mui/material';
+import axios from 'axios';
+import apiInstance, { HttpGet, HttpPost } from '../service/HttpService';
+import { LoginContext } from '../contexts/LoginContextProvider';
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 
 function Login() {
+
+  const navigate = useNavigate();
+
+  const { loginCheck } = useContext(LoginContext);
+
   const [credentials, setCredentials] = useState({
-    email: '',
+    username: '',
     password: '',
   });
 
@@ -16,14 +26,37 @@ function Login() {
       ...credentials,
       [name]: value,
     });
+    console.log(credentials);
   };
 
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // 로그인 로직 처리 예시: 콘솔에 입력 데이터 출력
+    // 회원가입 로직 처리
     console.log(credentials);
-    // 실제 로그인 처리 로직을 여기에 구현하세요
+    await apiInstance.post('http://localhost:8080/api/v1/auth/login', credentials)
+    .then((response) => {
+      const authorizationHeader = response.headers.authorization;
+      console.log(`authorizationHeader : ${authorizationHeader}`);
+      const newAccessToken = authorizationHeader.replace('Bearer ', '');
+      Cookies.set("accessToken", newAccessToken);
+      apiInstance.defaults.headers.common.authorization = `Bearer ${newAccessToken}`;
+
+      console.log("console.log(Cookies.get());");
+      console.log(Cookies.get("RefreshToken"));
+      if(Cookies.get("RefreshToken")){
+        console.log("==================== 존 재 =======================");
+      }
+      loginCheck();
+      console.log('로그인 체크 끝');
+      alert('로그인 성공');
+      navigate("/");
+    })
+    .catch((error) => {
+      alert("로그인 실패");
+    })
   };
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -36,12 +69,12 @@ function Login() {
           margin="normal"
           required
           fullWidth
-          id="email"
-          label="Email Address"
-          name="email"
-          autoComplete="email"
+          id="username"
+          label="ID"
+          name="username"
+          autoComplete="username"
           autoFocus
-          value={credentials.email}
+          value={credentials.username}
           onChange={handleChange}
         />
         <TextField
