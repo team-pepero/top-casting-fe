@@ -15,6 +15,9 @@ function Cart() {
   const [selectedItems, setSelectedItems] = useState([]);
 
   useEffect(() => {
+
+	
+
     if (!isLogin) {
       loginCheck();
     }
@@ -72,6 +75,7 @@ function Cart() {
   };
 
   const handleCheckboxChange = (event, cartItemId) => {
+	console.log("selectedItems",selectedItems)
     if (event.target.checked) {
       setSelectedItems([...selectedItems, cartItemId]);
     } else {
@@ -80,7 +84,15 @@ function Cart() {
   };
 
   const handleOrder = () => {
-    const orderContent = cart.cartItems.filter(item => selectedItems.includes(item.cartItemId)).map(item => ({ cartItemId: item.cartItemId, itemQuantity: item.itemQuantity }));
+    const orderContent = cart.cartItems.filter(item => selectedItems.includes(item.cartItemId))
+	.map(item => ({ cartItemId: item.cartItemId,
+		itemImage: item.itemImage,
+		itemQuantity: item.itemQuantity,
+		itemName: item.itemName,
+		itemColor: item.itemColor,
+		itemPrice: item.itemPrice}));
+		
+	console.log("test", orderContent);
     const orderData = {
       content: orderContent,
       totalPrice: calculateTotal(),
