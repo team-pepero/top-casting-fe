@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
 const categories = [
@@ -15,9 +14,7 @@ const categories = [
   "고객센터",
 ];
 
-const CategoryBar = () => {
-  const [activeCategory, setActiveCategory] = useState("전체");
-
+const CategoryBar = ({ activeCategory, setActiveCategory }) => {
   return (
     <AppBar position="static" color="default">
       <Toolbar>
