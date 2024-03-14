@@ -35,7 +35,7 @@ function App() {
                         <Route path='/admin/orders' element={<AdminOrderList/>}></Route> {/* 관리자 모든 주문 조회 */}
                         <Route path='/RequestRefundList' element={<RequestRefundList/>}></Route> {/*환불 요청 리스트*/}
                         <Route path='/requestRefundList/:orderId' element={<OrderDetailAdmin/>}></Route> {/*환불요청 수락*/}
-                        <Route path='/join/additionalInfo' element={<AddInfoPage/>}></Route>
+                        <Route path='/socialLogin/additionalInfo' element={<AddInfoPage/>}></Route>
                     </Routes>
                 </LoginContextProvider>
             </Router>
