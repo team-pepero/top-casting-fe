@@ -6,7 +6,6 @@ const SocialLoginButton = (props) => {
     const frontUrl = props.frontUrl;
     const backUrl = props.backUrl;
     const url = `${backUrl}/socialLogin/${props.domain}?redirectUrl=${frontUrl}`;
-    console.log(url);
     return (
       <Button
         variant="contained"
