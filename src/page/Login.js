@@ -101,6 +101,16 @@ function Login() {
             backUrl="http://localhost:8080"
             domain="naver"
           />
+          <SocialLoginButton
+            frontUrl="http://localhost:3000"
+            backUrl="http://localhost:8080"
+            domain="facebook"
+          />
+          <SocialLoginButton
+            frontUrl="http://localhost:3000"
+            backUrl="http://localhost:8080"
+            domain="kakao"
+          />
         </Stack>
       </form>
     </Container>
