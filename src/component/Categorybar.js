@@ -2,6 +2,7 @@ import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 
 const categories = [
   "전체",
@@ -15,6 +16,13 @@ const categories = [
 ];
 
 const CategoryBar = ({ activeCategory, setActiveCategory }) => {
+  const navigate = useNavigate();
+
+  const handleCategoryClick = (category) => {
+    setActiveCategory(category);
+    navigate(`/category/${category}`);
+  };
+
   return (
     <AppBar position="static" color="default">
       <Toolbar>

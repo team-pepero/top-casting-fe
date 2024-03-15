@@ -1,5 +1,7 @@
-// CartContext.js
-import React, { createContext, useContext, useState } from "react";
+// CartContext.js 업데이트 예시
+import React, { createContext, useContext, useState, useEffect } from "react";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 const CartContext = createContext();
 
@@ -8,29 +10,35 @@ export const useCart = () => useContext(CartContext);
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
 
-  const addToCart = (product) => {
-    setCartItems((prevItems) => {
-      // 상품이 이미 장바구니에 있는지 확인
-      const itemExists = prevItems.find((item) => item.id === product.id);
-      if (itemExists) {
-        // 상품이 이미 있으면 수량만 증가
-        return prevItems.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      } else {
-        // 새 상품이면 장바구니에 추가
-        return [...prevItems, { ...product, quantity: 1 }];
-      }
-    });
-  };
-  const removeFromCart = (itemId) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
+  const fetchData = async () => {
+    const accessToken = Cookies.get("accessToken");
+    if (!accessToken) {
+      console.log("Access Token is missing");
+      return;
+    }
+
+    try {
+      const response = await axios.get("http://your-api-endpoint/carts", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      setCartItems(response.data.cartItems); // Assuming response.data.cartItems is the array of cart items
+    } catch (error) {
+      console.error("Error fetching cart data: ", error);
+    }
   };
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  // Add other cart related functions here
+
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart }}>
+    <CartContext.Provider
+      value={{ cartItems, setCartItems /* add other functions here */ }}
+    >
       {children}
     </CartContext.Provider>
   );
