@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
 import { Container, TextField, Button, Typography, Stack } from "@mui/material";
-import apiInstance from "../service/HttpService";
-import { LoginContext } from "../contexts/LoginContextProvider";
+import apiInstance from "../../service/HttpService";
+import { LoginContext } from "../../contexts/LoginContextProvider";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-import SocialLoginButton from "../component/SocialLoginButton";
+import SocialLoginButton from "../../component/SocialLoginButton";
 
 function Login() {
   const navigate = useNavigate();
@@ -22,29 +22,20 @@ function Login() {
       ...credentials,
       [name]: value,
     });
-    console.log(credentials);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     // 회원가입 로직 처리
-    console.log(credentials);
     await apiInstance
       .post("http://localhost:8080/api/v1/auth/login", credentials)
       .then((response) => {
         const authorizationHeader = response.headers.authorization;
-        console.log(`authorizationHeader : ${authorizationHeader}`);
         const newAccessToken = authorizationHeader.replace("Bearer ", "");
         Cookies.set("accessToken", newAccessToken);
         apiInstance.defaults.headers.common.authorization = `Bearer ${newAccessToken}`;
 
-        console.log("console.log(Cookies.get());");
-        console.log(Cookies.get("RefreshToken"));
-        if (Cookies.get("RefreshToken")) {
-          console.log("==================== 존 재 =======================");
-        }
         loginCheck();
-        console.log("로그인 체크 끝");
         alert("로그인 성공");
         navigate("/");
       })
@@ -100,7 +91,7 @@ function Login() {
             frontUrl="http://localhost:3000"
             backUrl="http://localhost:8080"
             domain="naver"
-          />x
+          />
           <SocialLoginButton
             frontUrl="http://localhost:3000"
             backUrl="http://localhost:8080"

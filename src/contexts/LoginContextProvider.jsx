@@ -2,15 +2,20 @@ import React, { useEffect, useState } from 'react';
 import apiInstance, { HttpPost } from '../service/HttpService';
 import Cookies from 'js-cookie';
 import { HttpGet } from '../service/HttpService';
+import { useNavigate, useLocation } from 'react-router-dom';
+
 
 export const LoginContext = React.createContext();
 
 
 const LoginContextProvider = ({ children }) => {
 
+    const location = useLocation();
+    const navigate = useNavigate();
+
     useEffect(() => {
         loginCheck();
-      }, []);
+      }, [location.pathname]); //라우트 변경시마다 실행
 
     // 로그인 여부
     const [isLogin, setLogin] = useState(false);
@@ -31,15 +36,6 @@ const LoginContextProvider = ({ children }) => {
         authList.forEach((auth) => {
             roleList.push(auth);
         })
-
-        console.log(typeof (authList));
-
-        console.log(`no : ${no}`);
-        console.log(`no : ${userId}`);
-        console.log(`no : ${authList}`);
-        console.log(`roleList = ${roleList}`);
-
-
 
         // 로그인 여부 : true
         setLogin(true);
@@ -83,7 +79,6 @@ const LoginContextProvider = ({ children }) => {
     const logout = async() => {
 
         const check = window.confirm(`로그아웃 하시겠습니까?`);
-        console.log(check);
 
         if(check){
             await HttpPost('http://localhost:8080/api/v1/auth/logout')
@@ -104,6 +99,10 @@ const LoginContextProvider = ({ children }) => {
         await HttpGet('http://localhost:8080/api/v1/auth/info')
             .then((response) => {
                 loginSetting(response, accessToken);
+
+                if(response.authorities == "ROLE_SOCIALUSER"){
+                    navigate("/socialLogin/additionalInfo");
+                }
             })
             .catch((error) => {
                 console.log(error);
