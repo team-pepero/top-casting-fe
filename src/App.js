@@ -17,6 +17,9 @@ import OrderCompletePage from './page/order/OrderComletePage';
 import RequestRefundList from './page/order/RequestRefundList';
 import OrderDetailAdmin from './page/order/OrderDetailAdmin';
 import AdminOrderList from './page/order/AdminOrderList';
+import ItemList from './component/ItemList';
+import ItemListPage from './page/ItemListPage';
+import CategoryBar from './component/Categorybar';
 
 function App() {
   return (
@@ -24,6 +27,7 @@ function App() {
       <Router>
         <LoginContextProvider>
           <Navibar></Navibar>
+          <CategoryBar></CategoryBar>
           <Routes>
             <Route path='/' element={<MainPage />}></Route>
             <Route path='/join' element={<SignUp />}></Route>
@@ -39,6 +43,7 @@ function App() {
             <Route path='/admin/orders' element={<AdminOrderList />}></Route> {/* 관리자 모든 주문 조회 */}
             <Route path='/RequestRefundList' element={<RequestRefundList />}></Route> {/*환불 요청 리스트*/}
             <Route path='/requestRefundList/:orderId' element={<OrderDetailAdmin />}></Route> {/*환불요청 수락*/}
+            <Route path='/itemList' element={<ItemListPage/>}></Route>
           </Routes>
         </LoginContextProvider>
       </Router>

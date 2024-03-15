@@ -58,7 +58,6 @@ const ItemPage = () => {
   return (
     <>
       <SearchBar onSearch={handleSearch} />
-      <CategoryBar onCategorySelect={handleCategorySelect} /> {/* CategoryBar 컴포넌트를 렌더링합니다. */}
       <ItemList items={items} />
       <Pagination
         currentPage={currentPage}
