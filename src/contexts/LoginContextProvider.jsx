@@ -10,10 +10,12 @@ const LoginContextProvider = ({ children }) => {
 
     useEffect(() => {
         loginCheck();
+        console.log("isLogin:", isLogin);
       }, []);
 
     // 로그인 여부
     const [isLogin, setLogin] = useState(false);
+
 
     // 유저 정보 
     const [userInfo, setUserInfo] = useState({});

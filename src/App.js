@@ -1,3 +1,4 @@
+// App.js
 import './App.css';
 import Navibar from './component/Navibar';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -28,27 +29,21 @@ function App() {
             <Route path='/join' element={<SignUp />}></Route>
             <Route path='/login' element={<Login />}></Route>
             <Route path="/cart" element={<Cart />}></Route>
-			<Route path='/orders' element={<Orders/>}></Route>	{/* 주문 리스트 */}
+            <Route path='/itempage' element={<ItemPage />} />
+            <Route path='/category/:categoryName' element={<ItemPage />} /> {/* 카테고리별 아이템 페이지 */}
+            <Route path='/orders' element={<Orders/>}></Route>	{/* 주문 리스트 */}
             <Route path="/orderSheet" element={<OrderSheet />}></Route> {/* 주문작성 */}
-			<Route path='/order/:orderId' element={<OrderDetail />}></Route> {/* 주문 상세 */}
-			<Route path='/payment' element={<Payment />}></Route> {/*결제*/}
-			<Route path='/orderComplete' element={<OrderCompletePage />}></Route> {/* 결제완료창 */}
-			<Route path='/admin/orders' element={<AdminOrderList />}></Route> {/* 관리자 모든 주문 조회 */}
-			<Route path='/RequestRefundList' element={<RequestRefundList />}></Route> {/*환불 요청 리스트*/}
-			<Route path='/requestRefundList/:orderId' element={<OrderDetailAdmin />}></Route> {/*환불요청 수락*/}
+            <Route path='/order/:orderId' element={<OrderDetail />}></Route> {/* 주문 상세 */}
+            <Route path='/payment' element={<Payment />}></Route> {/*결제*/}
+            <Route path='/orderComplete' element={<OrderCompletePage />}></Route> {/* 결제완료창 */}
+            <Route path='/admin/orders' element={<AdminOrderList />}></Route> {/* 관리자 모든 주문 조회 */}
+            <Route path='/RequestRefundList' element={<RequestRefundList />}></Route> {/*환불 요청 리스트*/}
+            <Route path='/requestRefundList/:orderId' element={<OrderDetailAdmin />}></Route> {/*환불요청 수락*/}
           </Routes>
         </LoginContextProvider>
       </Router>
 
-    <Navibar></Navibar>
-    <Router>
-      <Routes>
-        <Route path='/' element={<MainPage/>}></Route>
-        <Route path='/join' element={<SignUp/>}></Route>
-        <Route path='/login' element={<Login/>}></Route>
-        <Route path='/itempage' element={<ItemPage />} />
-      </Routes>
-    </Router>
+
   
     </>
   );
