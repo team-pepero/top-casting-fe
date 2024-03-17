@@ -24,11 +24,11 @@ function App() {
               <Route path="/login" element={<Login />}></Route>
               <Route path="/cart" element={<Cart />}></Route>
               <Route path="/orderSheet" element={<OrderSheet />}></Route>
-              <Route path="/" element={<ProductListPage category="전체" />} />
-              <Route
+              {/* <Route path="/" element={<ProductListPage category="전체" />} /> */}
+              {/* <Route
                 path="/category/:categoryName"
                 element={<ProductListPage />}
-              />
+              /> */}
               <Route path="/items/:itemId" element={<ItemDetailPage />} />
             </Routes>
           </CartProvider>
