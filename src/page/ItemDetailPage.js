@@ -37,18 +37,22 @@ const ItemDetailPage = () => {
     fetchItemDetail();
   }, [itemId]); // 의존성 배열에서도 `itemId` 사용
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     const itemToAdd = {
-      // selectedColor, quantity
-      optionId: selectedColor,
-      itemQuantity: quantity,
+      optionId: selectedColor, // ID of the selected color option
+      itemQuantity: quantity, // Quantity of the item to add
     };
-    HttpPost("http://localhost:8080/api/v1/carts", itemToAdd).then(
-      (response) => {
-        console.log(response);
-      }
-    );
-    console.log("Item added to cart", itemToAdd);
+
+    try {
+      const response = await HttpPost(
+        "http://localhost:8080/api/v1/carts",
+        itemToAdd
+      );
+
+      console.log("Response from adding item to cart:", response);
+    } catch (error) {
+      console.error("Failed to add item to cart:", error);
+    }
   };
 
   const handleColorChange = (event) => {

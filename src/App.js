@@ -15,6 +15,7 @@ import RequestRefundList from "./page/order/RequestRefundList";
 import OrderDetailAdmin from "./page/order/OrderDetailAdmin";
 import AdminOrderList from "./page/order/AdminOrderList";
 import AddInfoPage from "./page/auth/AddInfoPage";
+import ItemDetailPage from "./page/ItemDetailPage";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route path="/" element={<MainPage />}></Route>
             <Route path="/join" element={<SignUp />}></Route>
             <Route path="/login" element={<Login />}></Route>
+            <Route path="/items/:itemId" element={<ItemDetailPage />} />
             <Route path="/cart" element={<Cart />}></Route>
             <Route path="/orders" element={<Orders />}></Route>{" "}
             {/* 주문 리스트 */}
