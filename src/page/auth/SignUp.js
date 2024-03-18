@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, TextField, Button, Typography, Grid, imageListClasses } from '@mui/material';
-import { HttpPost } from '../service/HttpService';
+import { HttpPost } from '../../service/HttpService';
 import DaumPostcode from 'react-daum-postcode';
 import { useNavigate } from 'react-router-dom';
 
@@ -30,13 +30,11 @@ function SignUp() {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleComplete = (data) => {
-    console.log(data);
     setFormData({
       ...formData,
       address1: data.address,
       zipcode: data.zonecode,
     });
-    console.log(formData);
     setIsOpen(false); // 모달 닫기
   };
 
@@ -47,7 +45,6 @@ function SignUp() {
   const handleSubmit = (e) => {
     e.preventDefault();
     // 회원가입 로직 처리
-    console.log(formData);
     HttpPost('http://localhost:8080/api/v1/auth/join', formData)
     .then( (response) => {
       alert("회원가입 성공")
