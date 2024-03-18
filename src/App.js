@@ -1,6 +1,7 @@
 import ItemPage from './page/ItemPage';
 import "./App.css";
 import Navibar from "./component/Navibar";
+import CategoryBar from './component/Categorybar';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import SignUp from "./page/auth/SignUp";
 import Login from "./page/auth/Login";
@@ -25,6 +26,7 @@ function App() {
     <Router>
         <LoginContextProvider>
             <Navibar></Navibar>
+            <CategoryBar></CategoryBar>
             <Routes>
                 <Route path="/" element={<MainPage />}></Route>
                 <Route path="/join" element={<SignUp />}></Route>

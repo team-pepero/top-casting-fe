@@ -1,10 +1,15 @@
 import React from 'react';
 import { Grid, Card, CardMedia, CardContent, Typography, CardActions, Button } from '@mui/material';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const ItemListPage = () => {
+    const navigate = useNavigate();
     const location = useLocation();
     const { items } = location.state || { items: { content: [] } }; // 기본값 설정
+
+    const handleMoreInfo = (itemId) => {
+        navigate(`/items/${itemId}`);
+    };
 
     return (
         <Grid container spacing={3}>
@@ -25,7 +30,7 @@ const ItemListPage = () => {
                             </Typography>
                         </CardContent>
                         <CardActions>
-                            <Button size="small">더보기</Button>
+                            <Button size="small" onClick={() => handleMoreInfo(item.itemId)}>더보기</Button>
                         </CardActions>
                     </Card>
                 </Grid>

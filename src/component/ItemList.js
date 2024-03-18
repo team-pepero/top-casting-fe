@@ -1,7 +1,17 @@
 import React from 'react';
 import { Grid, Card, CardMedia, CardContent, Typography, CardActions, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+
+
 
 const ItemList = ({ items }) => {
+
+  const navigate = useNavigate();
+
+  const handleMoreInfo = (itemId) => {
+    navigate(`/items/${itemId}`);
+  };
+
   return (
     <div>
       <Typography variant="h4" gutterBottom>
@@ -25,7 +35,7 @@ const ItemList = ({ items }) => {
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button size="small">더보기</Button>
+                <Button size="small" onClick={() => handleMoreInfo(item.itemId)}>더보기</Button>
               </CardActions>
             </Card>
           </Grid>
