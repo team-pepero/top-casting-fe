@@ -14,7 +14,6 @@ function MainPage() {
 
   return (
     <>
-      <CategoryBar></CategoryBar>
       <ImageSlider images={images}></ImageSlider>
       <Box
         sx={{

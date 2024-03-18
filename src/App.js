@@ -1,19 +1,22 @@
+import ItemPage from './page/ItemPage';
 import "./App.css";
 import Navibar from "./component/Navibar";
+import CategoryBar from './component/Categorybar';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import SignUp from "./page/auth/SignUp";
 import Login from "./page/auth/Login";
 import MainPage from "./page/MainPage";
 import LoginContextProvider from "./contexts/LoginContextProvider";
 import Cart from "./page/Cart";
-import OrderSheet from "./page/order/OrderSheet";
-import Orders from "./page/order/Orders";
-import OrderDetail from "./page/order/OrderDetail";
-import Payment from "./page/order/Payment";
-import OrderCompletePage from "./page/order/OrderComletePage";
-import RequestRefundList from "./page/order/RequestRefundList";
-import OrderDetailAdmin from "./page/order/OrderDetailAdmin";
-import AdminOrderList from "./page/order/AdminOrderList";
+import OrderSheet from './page/order/OrderSheet';
+import Orders from './page/order/Orders';
+import OrderDetail from './page/order/OrderDetail';
+import Payment from './page/order/Payment'
+import OrderCompletePage from './page/order/OrderComletePage';
+import RequestRefundList from './page/order/RequestRefundList';
+import OrderDetailAdmin from './page/order/OrderDetailAdmin';
+import AdminOrderList from './page/order/AdminOrderList';
+import ItemListPage from './page/ItemListPage';
 import AddInfoPage from "./page/auth/AddInfoPage";
 import ItemDetailPage from "./page/ItemDetailPage";
 import EditProfile from "./page/EditProfile";
@@ -25,12 +28,16 @@ function App() {
             <Router>
                 <LoginContextProvider>
                     <Navibar></Navibar>
+                    <CategoryBar></CategoryBar>
                     <Routes>
                         <Route path="/" element={<MainPage />}></Route>
                         <Route path="/join" element={<SignUp />}></Route>
                         <Route path="/login" element={<Login />}></Route>
                         <Route path="/items/:itemId" element={<ItemDetailPage />} />
                         <Route path="/cart" element={<Cart />}></Route>
+                        <Route path='/itempage' element={<ItemPage />} />
+                        <Route path='/category/:categoryName' element={<ItemPage />} /> {/* 카테고리별 아이템 페이지 */}
+                        <Route path='/itemList' element={<ItemListPage/>}></Route>
                         <Route path="/orders" element={<Orders />}></Route>{" "}
                         {/* 주문 리스트 */}
                         <Route path="/orderSheet" element={<OrderSheet />}></Route>{" "}

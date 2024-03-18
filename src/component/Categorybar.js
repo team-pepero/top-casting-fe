@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { AppBar, Toolbar, Button, Box } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const mainCategories = {
 	'하드베이트': { items: ['플로팅미노우', '메탈지그', '타이바라', '에기'], ids: [1,2,3,4]},
@@ -11,14 +12,16 @@ const mainCategories = {
   };
   
   const CategoryBar = () => {
+	const navigate = useNavigate();
 
 	const sendMainCategory = async (mainCategory) => {
 		try {
 
-		  const response = await axios.get('http://localhost:8081/api/v1/items', {
+		  const response = await axios.get('http://localhost:8080/api/v1/items', {
 			params: { maincategory: mainCategory }
 		  });
 		  console.log(response.data); 
+		  navigate('/itemList', { state: { items: response.data } });
 		} catch (error) {
 		  console.error('메인카테고리 에러', error);
 		}
@@ -28,9 +31,10 @@ const mainCategories = {
 		try {
 			console.log("subcateogry: ", subCategory)
 
-		  const response = await axios.get('http://localhost:8081/api/v1/items', {
+		  const response = await axios.get('http://localhost:8080/api/v1/items', {
 			params: { subcategory: subCategory }
 		  });
+		  navigate('/itemList', { state: { items: response.data } });
 		  console.log(response.data);
 		} catch (error) {
 		  console.error('서브 카테고리 에러', error);
