@@ -16,6 +16,8 @@ import OrderDetailAdmin from "./page/order/OrderDetailAdmin";
 import AdminOrderList from "./page/order/AdminOrderList";
 import AddInfoPage from "./page/auth/AddInfoPage";
 import ItemDetailPage from "./page/ItemDetailPage";
+import EditProfile from "./page/EditProfile";
+import MyPage from "./page/MyPage";
 
 function App() {
     return (
@@ -63,6 +65,8 @@ function App() {
                             path="/socialLogin/additionalInfo"
                             element={<AddInfoPage />}
                         ></Route>
+                        <Route path='/EditProfile' element={<EditProfile />}></Route> {/*회원정보 수정*/}
+                        <Route path='/MyPage' element={<MyPage />}></Route>
                     </Routes>
                 </LoginContextProvider>
             </Router>
