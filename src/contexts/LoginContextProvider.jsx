@@ -15,7 +15,7 @@ const LoginContextProvider = ({ children }) => {
 
     useEffect(() => {
         loginCheck();
-      }, [location.pathname]); //라우트 변경시마다 실행
+    }, [location.pathname]); //라우트 변경시마다 실행
 
     // 로그인 여부
     const [isLogin, setLogin] = useState(false);
@@ -52,6 +52,7 @@ const LoginContextProvider = ({ children }) => {
             if (role == 'ROLE_USER') updatedRoles.isUser = true;
             if (role == 'ROLE_ADMIN') updatedRoles.isAdmin = true;
         });
+        console.log(updatedRoles);
         setRoles(updatedRoles);
     }
 
@@ -76,15 +77,15 @@ const LoginContextProvider = ({ children }) => {
 
     }
 
-    const logout = async() => {
+    const logout = async () => {
 
         const check = window.confirm(`로그아웃 하시겠습니까?`);
 
-        if(check){
+        if (check) {
             await HttpPost('http://localhost:8080/api/v1/auth/logout')
-            .then(() => {
-                logoutSetting();
-            })
+                .then(() => {
+                    logoutSetting();
+                })
         }
     }
 
@@ -92,15 +93,15 @@ const LoginContextProvider = ({ children }) => {
     // jwt로 사용자 정보 요청
     const loginCheck = async () => {
         const accessToken = Cookies.get("accessToken");
-        if(accessToken){
+        if (accessToken) {
             apiInstance.defaults.headers.common.authorization = `Bearer ${accessToken}`;
         }
-        
+
         await HttpGet('http://localhost:8080/api/v1/auth/info')
             .then((response) => {
                 loginSetting(response, accessToken);
 
-                if(response.authorities == "ROLE_SOCIALUSER"){
+                if (response.authorities == "ROLE_SOCIALUSER") {
                     navigate("/socialLogin/additionalInfo");
                 }
             })

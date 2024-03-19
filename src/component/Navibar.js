@@ -19,18 +19,19 @@ function Navibar() {
                 </Typography>
                 {/* 공통 */}
                 <Button color="inherit" component={Link} to="/">Home</Button>
-                {isLogin ? 
-                <>
-                <Button color="inherit" component={Link} onClick={() => logout()}>로그아웃</Button>
-                <Button color="inherit" component={Link} to="/">{userInfo.userId}</Button>
-                </>
-                :
-                <>
-                <Button color="inherit" component={Link} to="/join">회원가입</Button>
-                <Button color="inherit" component={Link} to="/login">로그인</Button>
-                </>
+                {isLogin ?
+                    <>
+                        <Button color="inherit" component={Link} onClick={() => logout()}>로그아웃</Button>
+                        <Button color="inherit" component={Link} to="/">{userInfo.userId}</Button>
+                        <Button color="inherit" component={Link} to="/admin">관리자</Button>
+                    </>
+                    :
+                    <>
+                        <Button color="inherit" component={Link} to="/join">회원가입</Button>
+                        <Button color="inherit" component={Link} to="/login">로그인</Button>
+                    </>
                 }
-                
+
             </Toolbar>
         </AppBar>
     );

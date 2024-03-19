@@ -21,6 +21,8 @@ import AddInfoPage from "./page/auth/AddInfoPage";
 import ItemDetailPage from "./page/ItemDetailPage";
 import EditProfile from "./page/EditProfile";
 import MyPage from "./page/MyPage";
+import Admin from './page/Admin';
+import AddItem from './page/AddItem';
 
 function App() {
     return (
@@ -37,7 +39,7 @@ function App() {
                         <Route path="/cart" element={<Cart />}></Route>
                         <Route path='/itempage' element={<ItemPage />} />
                         <Route path='/category/:categoryName' element={<ItemPage />} /> {/* 카테고리별 아이템 페이지 */}
-                        <Route path='/itemList' element={<ItemListPage/>}></Route>
+                        <Route path='/itemList' element={<ItemListPage />}></Route>
                         <Route path="/orders" element={<Orders />}></Route>{" "}
                         {/* 주문 리스트 */}
                         <Route path="/orderSheet" element={<OrderSheet />}></Route>{" "}
@@ -74,6 +76,8 @@ function App() {
                         ></Route>
                         <Route path='/EditProfile' element={<EditProfile />}></Route> {/*회원정보 수정*/}
                         <Route path='/MyPage' element={<MyPage />}></Route>
+                        <Route path='/admin' element={<Admin />}></Route> {/*관리자 페이지*/}
+                        <Route path='/addItem' element={<AddItem />}></Route> {/*상품 등록*/}
                     </Routes>
                 </LoginContextProvider>
             </Router>
