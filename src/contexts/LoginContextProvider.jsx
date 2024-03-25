@@ -81,7 +81,7 @@ const LoginContextProvider = ({ children }) => {
         const check = window.confirm(`로그아웃 하시겠습니까?`);
 
         if(check){
-            await HttpPost('http://localhost:8080/api/v1/auth/logout')
+            await HttpPost('/api/v1/auth/logout')
             .then(() => {
                 logoutSetting();
             })
@@ -96,7 +96,7 @@ const LoginContextProvider = ({ children }) => {
             apiInstance.defaults.headers.common.authorization = `Bearer ${accessToken}`;
         }
         
-        await HttpGet('http://localhost:8080/api/v1/auth/info')
+        await HttpGet('/api/v1/auth/info')
             .then((response) => {
                 loginSetting(response, accessToken);
 

@@ -26,7 +26,7 @@ const OrderCompletePage = () => {
         }
 				
                 try {
-                    const response = await axios.get('http://localhost:8080/api/v1/payment/toss/success', {
+                    const response = await axios.get(`${process.env.REACT_APP_BACK_URL}/api/v1/payment/toss/success`, {
 						headers: {
 							Authorization: `bearer ${accessToken}`,
 						},

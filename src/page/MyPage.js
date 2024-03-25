@@ -25,7 +25,7 @@ function MemberDetails() {
             try {
                 // 서버로부터 데이터를 가져옵니다.
                 console.log("Bearer : ", accessToken)
-                const response = await axios.get(`http://localhost:8080/api/v1/members/${userInfo.no}`, {
+                const response = await axios.get(`${process.env.REACT_APP_BACK_URL}/api/v1/members/${userInfo.no}`, {
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
                     },

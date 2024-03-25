@@ -19,7 +19,7 @@ const AdminOrderList = () => {
             return;
         }
         try {
-            const response = await axios.get(`http://localhost:8080/api/v1/admin/orders`,{
+            const response = await axios.get(`${process.env.REACT_APP_BACK_URL}/api/v1/admin/orders`,{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
 				}

@@ -52,7 +52,7 @@ const OrderSheet = () => {
         try {
 			orderDetails.totalItemPrice += orderDetails.shippingFee;
             const response = await axios.post(
-                "http://localhost:8080/api/v1/order", orderDetails,{
+                `${process.env.REACT_APP_BACK_URL}/api/v1/order`, orderDetails,{
 					headers: {
 						Authorization: `Bearer ${accessToken}`,
 					}
