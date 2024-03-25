@@ -17,7 +17,7 @@ const mainCategories = {
 	const sendMainCategory = async (mainCategory) => {
 		try {
 
-		  const response = await axios.get('http://localhost:8080/api/v1/items', {
+		  const response = await axios.get(`${process.env.REACT_APP_BACK_URL}/api/v1/items`, {
 			params: { maincategory: mainCategory }
 		  });
 		  console.log(response.data); 
@@ -31,7 +31,7 @@ const mainCategories = {
 		try {
 			console.log("subcateogry: ", subCategory)
 
-		  const response = await axios.get('http://localhost:8080/api/v1/items', {
+		  const response = await axios.get(`${process.env.REACT_APP_BACK_URL}/api/v1/items`, {
 			params: { subcategory: subCategory }
 		  });
 		  navigate('/itemList', { state: { items: response.data } });
