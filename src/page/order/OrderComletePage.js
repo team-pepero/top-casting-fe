@@ -6,30 +6,31 @@ import Cookies from 'js-cookie';
 const OrderCompletePage = () => {
     const [orderData, setOrderData] = useState(null);
     const location = useLocation();
-	const navigate = useNavigate();
+    const navigate = useNavigate();
+    const API_ROOT = process.env.REACT_APP_API_ROOT;
 
     useEffect(() => {
         // URL에서 쿼리 파라미터를 추출합니다.
         const queryParams = new URLSearchParams(location.search);
         const orderId = queryParams.get('orderId');
         const amount = queryParams.get('amount');
-		const paymentKey = queryParams.get('paymentKey');
+        const paymentKey = queryParams.get('paymentKey');
 
         if (orderId && amount && paymentKey) {
             // 서버로부터 주문 세부 정보를 가져옵니다.
             const fetchOrderData = async () => {
-				const accessToken = Cookies.get("accessToken");
+                const accessToken = Cookies.get("accessToken");
 
-        if (!accessToken) {
-            navigate("/login");
-            return;
-        }
-				
+                if (!accessToken) {
+                    navigate("/login");
+                    return;
+                }
+
                 try {
-                    const response = await axios.get('http://localhost:8080/api/v1/payment/toss/success', {
-						headers: {
-							Authorization: `bearer ${accessToken}`,
-						},
+                    const response = await axios.get(`${API_ROOT}/api/v1/payment/toss/success`, {
+                        headers: {
+                            Authorization: `bearer ${accessToken}`,
+                        },
                         params: {
                             paymentKey: paymentKey, // 실제 paymentKey를 넣어야 합니다.
                             orderId: orderId,
@@ -46,7 +47,7 @@ const OrderCompletePage = () => {
         }
     }, [location.search]);
 
-	
+
 
 
     if (!orderData) {

@@ -4,9 +4,10 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Cookies from 'js-cookie';
 
 const OrderSheet = () => {
-	
+
     const location = useLocation();
     const orderData = location.state.orderData;
+    const API_ROOT = process.env.REACT_APP_API_ROOT;
     const [orderDetails, setOrderDetails] = useState({
         customerName: "",
         customerAddress: "",
@@ -17,7 +18,7 @@ const OrderSheet = () => {
         shippingFee: orderData.shippingFee || 0,
         addOrderItemDtos: orderData.content,
     });
-	
+
 
     const navigate = useNavigate();
 
@@ -50,13 +51,13 @@ const OrderSheet = () => {
             return;
         }
         try {
-			orderDetails.totalItemPrice += orderDetails.shippingFee;
+            orderDetails.totalItemPrice += orderDetails.shippingFee;
             const response = await axios.post(
-                "http://localhost:8080/api/v1/order", orderDetails,{
-					headers: {
-						Authorization: `Bearer ${accessToken}`,
-					}
-				}
+                `${API_ROOT}/api/v1/order`, orderDetails, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                }
+            }
             );
             console.log("Order added successfully:", response.data);
             const orderId = response.data.orderId;
@@ -124,9 +125,9 @@ const OrderSheet = () => {
                                     />
                                 </td>
                                 <td>{item.itemName}</td>
-								<td>{item.itemQuantity}</td>
-								<td>{item.itemColor}</td>
-								<td>{item.itemPrice}</td>
+                                <td>{item.itemQuantity}</td>
+                                <td>{item.itemColor}</td>
+                                <td>{item.itemPrice}</td>
                                 <td>{item.itemPrice * item.itemQuantity}</td>
                             </tr>
                         ))}

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
   const navigate = useNavigate();
+  const API_ROOT = process.env.REACT_APP_API_ROOT;
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -45,17 +46,17 @@ function SignUp() {
   const handleSubmit = (e) => {
     e.preventDefault();
     // 회원가입 로직 처리
-    HttpPost('http://localhost:8080/api/v1/auth/join', formData)
-    .then( (response) => {
-      alert("회원가입 성공")
-      navigate("/login");
-    }).catch((error) => {
-      console.log("================== join error =================");
-      console.log(error);
-      if(typeof error.response.data === 'string'){
-        alert(error.response.data);
-      }
-    }); 
+    HttpPost(`${API_ROOT}/api/v1/auth/join`, formData)
+      .then((response) => {
+        alert("회원가입 성공")
+        navigate("/login");
+      }).catch((error) => {
+        console.log("================== join error =================");
+        console.log(error);
+        if (typeof error.response.data === 'string') {
+          alert(error.response.data);
+        }
+      });
   };
 
   return (
@@ -64,27 +65,27 @@ function SignUp() {
         Sign up
       </Typography>
       {isOpen && (
-              <div style={{
-                display: 'flex',
-                flexDirection: 'column', // 내용을 세로로 정렬합니다.
-                position: 'fixed', // 또는 'absolute', 페이지 스크롤 여부에 따라 선택
-                top: '50%',
-                left: '50%',
-                zIndex: 300,
-                width: '50vw', // 화면 가로 크기의 50%
-                height: '60vh', // 화면 세로 크기의 50%
-                border: '2px solid #333', // 더 진한 테두리
-                backgroundColor: 'rgba(255, 255, 255, 0.9)', // 불투명한 배경
-                transform: 'translate(-50%, -50%)', // 정 중앙 정렬을 위한 조정
-                justifyContent: 'center',
-                alignItems: 'center',
-                padding: '20px', // 내부 여백 추가
-                boxSizing: 'border-box', // 패딩이 크기에 포함되도록 설정
-              }}>
-                <DaumPostcode onComplete={handleComplete} />
-                <button onClick={closeModal}>닫기</button>
-              </div>
-            )}
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column', // 내용을 세로로 정렬합니다.
+          position: 'fixed', // 또는 'absolute', 페이지 스크롤 여부에 따라 선택
+          top: '50%',
+          left: '50%',
+          zIndex: 300,
+          width: '50vw', // 화면 가로 크기의 50%
+          height: '60vh', // 화면 세로 크기의 50%
+          border: '2px solid #333', // 더 진한 테두리
+          backgroundColor: 'rgba(255, 255, 255, 0.9)', // 불투명한 배경
+          transform: 'translate(-50%, -50%)', // 정 중앙 정렬을 위한 조정
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: '20px', // 내부 여백 추가
+          boxSizing: 'border-box', // 패딩이 크기에 포함되도록 설정
+        }}>
+          <DaumPostcode onComplete={handleComplete} />
+          <button onClick={closeModal}>닫기</button>
+        </div>
+      )}
       <form onSubmit={handleSubmit} noValidate>
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -168,7 +169,7 @@ function SignUp() {
               onChange={handleChange}
             />
           </Grid>
-          
+
           <Grid item xs={12}>
             <TextField
               variant="outlined"

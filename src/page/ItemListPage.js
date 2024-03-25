@@ -6,6 +6,7 @@ const ItemListPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { items } = location.state || { items: { content: [] } }; // 기본값 설정
+    const API_ROOT = process.env.REACT_APP_API_ROOT;
 
     const handleMoreInfo = (itemId) => {
         navigate(`/items/${itemId}`);

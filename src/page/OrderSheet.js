@@ -6,6 +6,7 @@ const OrderSheet = () => {
 
     const location = useLocation();
     const orderData = location.state.orderData;
+    const API_ROOT = process.env.REACT_APP_API_ROOT;
 
     const [orderDetails, setOrderDetails] = useState({
         customerName: '',
@@ -59,7 +60,7 @@ const OrderSheet = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8080/api/v1/order', orderDetails);
+            const response = await axios.post(`${API_ROOT}/api/v1/order`, orderDetails);
             console.log('Order added successfully:', response.data);
             const orderId = response.data.orderId;
             navigate(`/payment?orderId=${orderId}`);

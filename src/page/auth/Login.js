@@ -8,7 +8,7 @@ import SocialLoginButton from "../../component/SocialLoginButton";
 
 function Login() {
   const navigate = useNavigate();
-
+  const API_ROOT = process.env.REACT_APP_API_ROOT;
   const { loginCheck } = useContext(LoginContext);
 
   const [credentials, setCredentials] = useState({
@@ -28,7 +28,7 @@ function Login() {
     e.preventDefault();
     // 회원가입 로직 처리
     await apiInstance
-      .post("http://localhost:8080/api/v1/auth/login", credentials)
+      .post(`${API_ROOT}/api/v1/auth/login`, credentials)
       .then((response) => {
         const authorizationHeader = response.headers.authorization;
         const newAccessToken = authorizationHeader.replace("Bearer ", "");
@@ -84,17 +84,17 @@ function Login() {
 
           <SocialLoginButton
             frontUrl="http://localhost:3000"
-            backUrl="http://localhost:8080"
+            backUrl="${API_ROOT}"
             domain="google"
           />
           <SocialLoginButton
             frontUrl="http://localhost:3000"
-            backUrl="http://localhost:8080"
+            backUrl="${API_ROOT}"
             domain="naver"
           />
           <SocialLoginButton
             frontUrl="http://localhost:3000"
-            backUrl="http://localhost:8080"
+            backUrl="${API_ROOT}"
             domain="kakao"
           />
         </Stack>

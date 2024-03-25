@@ -6,51 +6,52 @@ import Cookies from 'js-cookie';
 const OrderDetail = () => {
     const [orderDetail, setOrderDetail] = useState(null);
     const { orderId } = useParams();
-	const location = useLocation();
-	const navigate = useNavigate();
+    const location = useLocation();
+    const navigate = useNavigate();
+    const API_ROOT = process.env.REACT_APP_API_ROOT;
 
     useEffect(() => {
         fetchOrderDetail(orderId);
     }, [orderId]);
 
     const fetchOrderDetail = async (orderId) => {
-		const accessToken = Cookies.get("accessToken");
+        const accessToken = Cookies.get("accessToken");
 
-    if (!accessToken) {
-      navigate('/login');
-      return;
-    }
+        if (!accessToken) {
+            navigate('/login');
+            return;
+        }
         try {
-            const response = await axios.get(`http://localhost:8080/api/v1/admin/order/${orderId}`, {
-				headers: {
-				  Authorization: `Bearer ${accessToken}`
-				}
-			  });
-			console.log("response", response);
+            const response = await axios.get(`${API_ROOT}/api/v1/admin/order/${orderId}`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            });
+            console.log("response", response);
             setOrderDetail(response.data);
         } catch (error) {
             console.error('주문 상세 정보를 가져오는 데 실패했습니다:', error);
         }
     };
 
-	// 환불 을 처리하는 함수입니다.
+    // 환불 을 처리하는 함수입니다.
     const handleRefund = async () => {
-		const accessToken = Cookies.get("accessToken");
+        const accessToken = Cookies.get("accessToken");
 
-    if (!accessToken) {
-      navigate('/login');
-      return;
-    }
+        if (!accessToken) {
+            navigate('/login');
+            return;
+        }
         try {
-			const paymentKey = orderDetail.paymentKey;
-            const response = await axios.delete(`http://localhost:8080/api/v1/admin/refund?paymentKey=${paymentKey}&cancelReason=hello`, {
+            const paymentKey = orderDetail.paymentKey;
+            const response = await axios.delete(`${API_ROOT}/api/v1/admin/refund?paymentKey=${paymentKey}&cancelReason=hello`, {
                 orderId: orderDetail.orderId // 환불 요청 시 주문 ID를 본문에 포함시킵니다.
             }, {
-				headers: {
-				  Authorization: `Bearer ${accessToken}`
-				}
-			  });
-			console.log("Response:", response);
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            });
+            console.log("Response:", response);
             // 환불 성공 시 로직
             alert('환불 요청이 완료되었습니다.');
         } catch (error) {
@@ -87,7 +88,7 @@ const OrderDetail = () => {
                     </li>
                 ))}
             </ul>
-			<button onClick={handleRefund}>환불</button>
+            <button onClick={handleRefund}>환불</button>
         </div>
     );
 };

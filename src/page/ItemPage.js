@@ -12,11 +12,12 @@ const ItemPage = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [keyword, setKeyword] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(null); // 선택된 카테고리 상태
+  const API_ROOT = process.env.REACT_APP_API_ROOT;
 
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        let endpoint = 'http://localhost:8080/api/v1/items';
+        let endpoint = `${API_ROOT}/api/v1/items`;
         const params = { page: currentPage, size: 20 };
 
         // 메인 카테고리가 선택되었을 때

@@ -6,61 +6,62 @@ import Cookies from 'js-cookie';
 const OrderDetail = () => {
     const [orderDetail, setOrderDetail] = useState(null);
     const { orderId } = useParams();
-	const [orderStatus, setOrderStatus] = useState('');
-	const navigate = useNavigate();
+    const [orderStatus, setOrderStatus] = useState('');
+    const API_ROOT = process.env.REACT_APP_API_ROOT;
+    const navigate = useNavigate();
     useEffect(() => {
         fetchOrderDetail(orderId);
     }, [orderId]);
 
     const fetchOrderDetail = async (orderId) => {
 
-		const accessToken = Cookies.get("accessToken");
+        const accessToken = Cookies.get("accessToken");
         if (!accessToken) {
             navigate("/login");
             return;
         }
 
         try {
-            const response = await axios.get(`http://localhost:8080/api/v1/order/${orderId}`,{
-				headers: {
-					Authorization: `Bearer ${accessToken}`,
-				}
-			}
-		);
+            const response = await axios.get(`${API_ROOT}/api/v1/order/${orderId}`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                }
+            }
+            );
             setOrderDetail(response.data);
         } catch (error) {
             console.error('주문 상세 정보를 가져오는 데 실패했습니다:', error);
         }
     };
 
-	const handleStatusChange = (event) => {
-		setOrderStatus(event.target.value);
-	};
+    const handleStatusChange = (event) => {
+        setOrderStatus(event.target.value);
+    };
 
-	const handleSubmit = async () => {
+    const handleSubmit = async () => {
 
-		const accessToken = Cookies.get("accessToken");
+        const accessToken = Cookies.get("accessToken");
 
         if (!accessToken) {
             navigate("/login");
             return;
         }
 
-		try {
-		  const response = await axios.patch(`http://localhost:8080/api/v1/orders/${orderId}/refund`, {
-			orderStatus: orderStatus,
-		  }, {
-			headers: {
-				Authorization: `Bearer ${accessToken}`,
-			}
-		});
-		  console.log(response.data);
-		  alert('상태 업데이트 성공!');
-		} catch (error) {
-		  console.error('상태 업데이트 실패:', error);
-		  alert('상태 업데이트 실패!');
-		}
-	  };
+        try {
+            const response = await axios.patch(`${API_ROOT}/api/v1/orders/${orderId}/refund`, {
+                orderStatus: orderStatus,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                }
+            });
+            console.log(response.data);
+            alert('상태 업데이트 성공!');
+        } catch (error) {
+            console.error('상태 업데이트 실패:', error);
+            alert('상태 업데이트 실패!');
+        }
+    };
 
 
     if (!orderDetail) {
@@ -90,12 +91,12 @@ const OrderDetail = () => {
                     </li>
                 ))}
             </ul>
-			<select value={orderStatus} onChange={handleStatusChange}>
-        <option value="">상태를 선택하세요</option>
-        <option value="ORDER_REFUND_REQUESTED">환불 요청됨</option>
-        <option value="ORDER_EXCHANGE_REQUESTED">교환 요청됨</option>
-      </select>
-      <button onClick={handleSubmit}>환불 요청</button>
+            <select value={orderStatus} onChange={handleStatusChange}>
+                <option value="">상태를 선택하세요</option>
+                <option value="ORDER_REFUND_REQUESTED">환불 요청됨</option>
+                <option value="ORDER_EXCHANGE_REQUESTED">교환 요청됨</option>
+            </select>
+            <button onClick={handleSubmit}>환불 요청</button>
         </div>
     );
 };

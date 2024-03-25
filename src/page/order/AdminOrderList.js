@@ -4,35 +4,36 @@ import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
 
 const AdminOrderList = () => {
+    const API_ROOT = process.env.REACT_APP_API_ROOT;
     const [orders, setOrders] = useState([]);
-	const navigate = useNavigate();
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchOrders();
     }, []);
 
     const fetchOrders = async () => {
-		const accessToken = Cookies.get("accessToken");
+        const accessToken = Cookies.get("accessToken");
 
         if (!accessToken) {
             navigate("/login");
             return;
         }
         try {
-            const response = await axios.get(`http://localhost:8080/api/v1/admin/orders`,{
-				headers: {
-					Authorization: `Bearer ${accessToken}`,
-				}
-			}
-		); 
-			console.log(response)// '/orders'는 백엔드 엔드포인트에 맞게 수정하세요.
+            const response = await axios.get(`${API_ROOT}/api/v1/admin/orders`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                }
+            }
+            );
+            console.log(response)// '/orders'는 백엔드 엔드포인트에 맞게 수정하세요.
             setOrders(response.data);
         } catch (error) {
             console.error("주문 정보를 가져오는 데 실패했습니다:", error);
         }
     };
 
-	const handleOrderClick = (uuid) => {
+    const handleOrderClick = (uuid) => {
         navigate(`/order/${uuid}`);
     };
 

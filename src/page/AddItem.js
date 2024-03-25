@@ -7,7 +7,7 @@ import Cookies from 'js-cookie';
 function AddItem() {
     const { roles, accessToken } = useContext(LoginContext);
     const navigate = useNavigate();
-
+    const API_ROOT = process.env.REACT_APP_API_ROOT;
     const [itemName, setItemName] = useState("");
     const [itemPrice, setItemPrice] = useState("");
     const [itemImage, setItemImage] = useState("");
@@ -95,13 +95,13 @@ function AddItem() {
         };
 
         try {
-            await axios.post(`http://localhost:8080/api/v1/items`, itemData, {
+            await axios.post(`${API_ROOT}/api/v1/items`, itemData, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }
             });
             alert('상품이 성공적으로 등록되었습니다.');
-            const response = await axios.get('http://localhost:8080/api/v1/items', {
+            const response = await axios.get(`${API_ROOT}/api/v1/items`, {
                 params: { subcategory: itemData.subCategoryId }
             });
             navigate('/itemList', { state: { items: response.data } });

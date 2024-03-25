@@ -20,13 +20,14 @@ const ItemDetailPage = () => {
     const [itemDetail, setItemDetail] = useState(null);
     const [quantity, setQuantity] = useState(1); // 수량 상태 관리
     const [selectedColor, setSelectedColor] = useState("");
+    const API_ROOT = process.env.REACT_APP_API_ROOT;
 
     useEffect(() => {
         const fetchItemDetail = async () => {
             try {
                 // 여기서 `itemId`를 사용해 API 호출
                 const data = await HttpGet(
-                    `http://localhost:8080/api/v1/items/${itemId}`
+                    `${API_ROOT}/api/v1/items/${itemId}`
                 );
                 setItemDetail(data);
             } catch (error) {
@@ -45,7 +46,7 @@ const ItemDetailPage = () => {
 
         try {
             const response = await HttpPost(
-                "http://localhost:8080/api/v1/carts",
+                `${API_ROOT}/api/v1/carts`,
                 itemToAdd
             );
 

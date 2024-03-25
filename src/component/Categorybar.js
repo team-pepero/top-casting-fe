@@ -4,72 +4,72 @@ import { AppBar, Toolbar, Button, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const mainCategories = {
-	'하드베이트': { items: ['플로팅미노우', '메탈지그', '타이바라', '에기'], ids: [1,2,3,4]},
-	'소프트베이트': { items: ['새드', '테일', '호그'], ids: [5,6,7]},
-	'메탈지그&스푼': {items: ['메탈지그', '스푼'], ids: [8,9]},
-	'스커트베이트': {items: ['스피너베이트', '스피너'], ids: [10, 11]},
-	'각종장비': {items: ['낚시대', '악세사리'], ids: [12, 13]}
-  };
-  
-  const CategoryBar = () => {
-	const navigate = useNavigate();
+	'하드베이트': { items: ['플로팅미노우', '메탈지그', '타이바라', '에기'], ids: [1, 2, 3, 4] },
+	'소프트베이트': { items: ['새드', '테일', '호그'], ids: [5, 6, 7] },
+	'메탈지그&스푼': { items: ['메탈지그', '스푼'], ids: [8, 9] },
+	'스커트베이트': { items: ['스피너베이트', '스피너'], ids: [10, 11] },
+	'각종장비': { items: ['낚시대', '악세사리'], ids: [12, 13] }
+};
 
+const CategoryBar = () => {
+	const navigate = useNavigate();
+	const API_ROOT = process.env.REACT_APP_API_ROOT;
 	const sendMainCategory = async (mainCategory) => {
 		try {
 
-		  const response = await axios.get('http://localhost:8080/api/v1/items', {
-			params: { maincategory: mainCategory }
-		  });
-		  console.log(response.data); 
-		  navigate('/itemList', { state: { items: response.data } });
+			const response = await axios.get(`${API_ROOT}/api/v1/items`, {
+				params: { maincategory: mainCategory }
+			});
+			console.log(response.data);
+			navigate('/itemList', { state: { items: response.data } });
 		} catch (error) {
-		  console.error('메인카테고리 에러', error);
+			console.error('메인카테고리 에러', error);
 		}
-	  };
+	};
 
-	  const sendSubCategory = async (subCategory) => {
+	const sendSubCategory = async (subCategory) => {
 		try {
 			console.log("subcateogry: ", subCategory)
 
-		  const response = await axios.get('http://localhost:8080/api/v1/items', {
-			params: { subcategory: subCategory }
-		  });
-		  navigate('/itemList', { state: { items: response.data } });
-		  console.log(response.data);
+			const response = await axios.get(`${API_ROOT}/api/v1/items`, {
+				params: { subcategory: subCategory }
+			});
+			navigate('/itemList', { state: { items: response.data } });
+			console.log(response.data);
 		} catch (error) {
-		  console.error('서브 카테고리 에러', error);
+			console.error('서브 카테고리 에러', error);
 		}
-	  };
+	};
 
 
 	return (
 		<AppBar position="static" color="default">
-		<Toolbar>
-		  {Object.entries(mainCategories).map(([mainCategory, { items, ids }], index) => (
-			<Box key={mainCategory} sx={{ margin: '0 16px' }}>
-			  <Button
-				onClick={() => sendMainCategory(index + 1)}
-			  >
-				{mainCategory}
-			  </Button>
-			  <Box sx={{ display: 'flex', flexDirection: 'column', bgcolor: 'background.paper' }}>
-				{items.map((subCategory, subIndex) => (
-				  <Button
-					key={subCategory}
-					onClick={() => sendSubCategory(ids[subIndex])}
-				  >
-					{subCategory}
-				  </Button>
+			<Toolbar>
+				{Object.entries(mainCategories).map(([mainCategory, { items, ids }], index) => (
+					<Box key={mainCategory} sx={{ margin: '0 16px' }}>
+						<Button
+							onClick={() => sendMainCategory(index + 1)}
+						>
+							{mainCategory}
+						</Button>
+						<Box sx={{ display: 'flex', flexDirection: 'column', bgcolor: 'background.paper' }}>
+							{items.map((subCategory, subIndex) => (
+								<Button
+									key={subCategory}
+									onClick={() => sendSubCategory(ids[subIndex])}
+								>
+									{subCategory}
+								</Button>
+							))}
+						</Box>
+					</Box>
 				))}
-			  </Box>
-			</Box>
-		  ))}
-		</Toolbar>
-	  </AppBar>
+			</Toolbar>
+		</AppBar>
 	);
-  };
-  
-  export default CategoryBar;
+};
+
+export default CategoryBar;
 // const categories = ['전체', '하드베이트', '소프트베이트', '메탈지그&스푼', '스커트베이트', '각종 장비', '각종 채비', '고객센터',];
 
 // const CategoryBar = () => {

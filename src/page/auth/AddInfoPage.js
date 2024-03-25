@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 
 const AddInfoPage = () => {
   const navigate = useNavigate();
+  const API_ROOT = process.env.REACT_APP_API_ROOT;
 
   useEffect(() => {
     alert('쇼핑몰 정상이용을 위하여 추가정보를 입력해주세요');
@@ -54,7 +55,7 @@ const AddInfoPage = () => {
     e.preventDefault();
     // 회원가입 로직 처리
     console.log(formData);
-    HttpPost("http://localhost:8080/api/v1/auth/socialLogin/additionalInfo", formData)
+    HttpPost(`${API_ROOT}/api/v1/auth/socialLogin/additionalInfo`, formData)
       .then((response) => {
         alert("추가 정보 감사합니다.");
         navigate("/");

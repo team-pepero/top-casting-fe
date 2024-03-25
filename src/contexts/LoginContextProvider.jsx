@@ -9,7 +9,7 @@ export const LoginContext = React.createContext();
 
 
 const LoginContextProvider = ({ children }) => {
-
+    const API_ROOT = process.env.REACT_APP_API_ROOT;
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -52,7 +52,6 @@ const LoginContextProvider = ({ children }) => {
             if (role == 'ROLE_USER') updatedRoles.isUser = true;
             if (role == 'ROLE_ADMIN') updatedRoles.isAdmin = true;
         });
-        console.log(updatedRoles);
         setRoles(updatedRoles);
     }
 
@@ -82,7 +81,7 @@ const LoginContextProvider = ({ children }) => {
         const check = window.confirm(`로그아웃 하시겠습니까?`);
 
         if (check) {
-            await HttpPost('http://localhost:8080/api/v1/auth/logout')
+            await HttpPost(`${API_ROOT}/api/v1/auth/logout`)
                 .then(() => {
                     logoutSetting();
                 })
@@ -97,7 +96,7 @@ const LoginContextProvider = ({ children }) => {
             apiInstance.defaults.headers.common.authorization = `Bearer ${accessToken}`;
         }
 
-        await HttpGet('http://localhost:8080/api/v1/auth/info')
+        await HttpGet(`${API_ROOT}/api/v1/auth/info`)
             .then((response) => {
                 loginSetting(response, accessToken);
 

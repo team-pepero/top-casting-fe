@@ -8,6 +8,7 @@ import { LoginContext } from '../contexts/LoginContextProvider';
 function EditProfile() {
     const navigate = useNavigate();
     const { userInfo } = useContext(LoginContext);
+    const API_ROOT = process.env.REACT_APP_API_ROOT;
     const [memberInfo, setMemberInfo] = useState({
         nickname: '',
         password: '',
@@ -33,7 +34,7 @@ function EditProfile() {
 
 
         try {
-            const response = await axios.get(`http://localhost:8080/api/v1/members/${userInfo.no}`, {
+            const response = await axios.get(`${API_ROOT}/api/v1/members/${userInfo.no}`, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
@@ -72,7 +73,7 @@ function EditProfile() {
         };
 
         try {
-            await axios.patch(`http://localhost:8080/api/v1/members/${userInfo.no}`, updateData, {
+            await axios.patch(`${API_ROOT}/api/v1/members/${userInfo.no}`, updateData, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },

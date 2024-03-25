@@ -7,6 +7,7 @@ import Cookies from 'js-cookie';
 function Cart() {
   const { isLogin, loginCheck } = useContext(LoginContext);
   const navigate = useNavigate();
+  const API_ROOT = process.env.REACT_APP_API_ROOT;
   const [cart, setCart] = useState({
     cartItems: [],
     shippingFee: 0,
@@ -16,7 +17,7 @@ function Cart() {
 
   useEffect(() => {
 
-	
+
 
     if (!isLogin) {
       loginCheck();
@@ -32,7 +33,7 @@ function Cart() {
     }
 
     try {
-      const response = await axios.get("http://localhost:8080/api/v1/carts", {
+      const response = await axios.get(`${API_ROOT}/api/v1/carts`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
@@ -48,7 +49,7 @@ function Cart() {
     const accessToken = Cookies.get("accessToken");
 
     try {
-      await axios.post(`http://localhost:8080/api/v1/carts/${id}`, { itemQuantity: quantity }, {
+      await axios.post(`${API_ROOT}/api/v1/carts/${id}`, { itemQuantity: quantity }, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
@@ -63,7 +64,7 @@ function Cart() {
     const accessToken = Cookies.get("accessToken");
 
     try {
-      await axios.delete(`http://localhost:8080/api/v1/carts/${id}`, {
+      await axios.delete(`${API_ROOT}/api/v1/carts/${id}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
@@ -75,7 +76,7 @@ function Cart() {
   };
 
   const handleCheckboxChange = (event, cartItemId) => {
-	console.log("selectedItems",selectedItems)
+    console.log("selectedItems", selectedItems)
     if (event.target.checked) {
       setSelectedItems([...selectedItems, cartItemId]);
     } else {
@@ -85,14 +86,16 @@ function Cart() {
 
   const handleOrder = () => {
     const orderContent = cart.cartItems.filter(item => selectedItems.includes(item.cartItemId))
-	.map(item => ({ cartItemId: item.cartItemId,
-		itemImage: item.itemImage,
-		itemQuantity: item.itemQuantity,
-		itemName: item.itemName,
-		itemColor: item.itemColor,
-		itemPrice: item.itemPrice}));
-		
-	console.log("test", orderContent);
+      .map(item => ({
+        cartItemId: item.cartItemId,
+        itemImage: item.itemImage,
+        itemQuantity: item.itemQuantity,
+        itemName: item.itemName,
+        itemColor: item.itemColor,
+        itemPrice: item.itemPrice
+      }));
+
+    console.log("test", orderContent);
     const orderData = {
       content: orderContent,
       totalPrice: calculateTotal(),
