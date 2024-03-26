@@ -128,10 +128,6 @@ function Cart() {
   return (
 
     <>
-      <div class="flex items-center justify-center py-8">
-
-        <button onclick="checkoutHandler(false)" class="py-2 px-10 rounded bg-indigo-600 hover:bg-indigo-700 text-white">Open Modal</button>
-      </div>
       <div class="w-full h-full bg-black dark:bg-gray-900 bg-opacity-90 top-0 overflow-y-auto overflow-x-hidden fixed sticky-0" id="chec-div">
 
         <div class="w-full absolute z-10 right-0 h-full overflow-x-hidden transform translate-x-0 transition ease-in-out duration-700" id="checkout">
@@ -146,28 +142,44 @@ function Cart() {
               </div>
               <p class="lg:text-4xl text-3xl font-black leading-10 text-gray-800 dark:text-white pt-3">장바구니</p>
               {cart.cartItems.map((item) => (
-                <div key={item.cartItemId} class="md:flex items-strech py-8 md:py-10 lg:py-8 border-t border-gray-50">
+                <div key={item.cartItemId} class="md:flex items-center py-8 md:py-10 lg:py-8 border-t border-gray-50">
+                  <input placeholder="checkbox" type="checkbox" checked={selectedItems.includes(item.cartItemId)} onChange={(event) => handleCheckboxChange(event, item.cartItemId)} class="focus:opacity-100 checkbox cursor-pointer" />
                   <div class="md:w-4/12 2xl:w-1/4 w-full">
                     <img src={item.itemImage} alt={item.itemName} class="h-full object-center object-cover md:block hidden" />
                     <img src="https://i.ibb.co/g9xsdCM/Rectangle-37.pngg" alt="Black Leather Bag" class="md:hidden w-full h-full object-center object-cover" />
                   </div>
                   <div class="md:pl-3 md:w-8/12 2xl:w-3/4 flex flex-col justify-center">
-                    <p class="text-xs leading-3 text-gray-800 dark:text-white md:pt-0 pt-4">{item.cartItemId}</p>
-                    <div class="flex items-center justify-between w-full pt-1">
-                      <p class="text-base font-black leading-none text-gray-800 dark:text-white">{item.itemName}</p>
-                      <div aria-label="Select quantity" class="py-2 px-1 border border-gray-200 mr-6 focus:outline-none dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white">
-                        {item.itemQuantity}
-                        <button onClick={() => updateQuantity(item.cartItemId, item.itemQuantity + 1)}>▲</button>
-                        <button onClick={() => updateQuantity(item.cartItemId, item.itemQuantity - 1)}>▼</button>
+                    <div class="flex items-center">
+                      <div class="flex flex-col justify-center w-full">
+                        <div class="flex items-center justify-between w-full pt-1">
+                          <p class="text-base font-black leading-none text-gray-800 dark:text-white">{item.itemName}</p>
+                          <div class="flex items-center justify-center">
+                            <button id="decrement-btn" onClick={() => updateQuantity(item.cartItemId, item.itemQuantity - 1)}
+                              class="flex justify-center items-center w-6 h-6 rounded-full text-white focus:outline-none bg-gray-400 hover:bg-gray-500">
+                              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
+                              </svg>
+                            </button>
+                            <span id="counter" class="text-xl font-bold mx-4">{item.itemQuantity}</span>
+                            <button id="increment-btn" onClick={() => updateQuantity(item.cartItemId, item.itemQuantity + 1)}
+                              class="flex justify-center items-center w-6 h-6 rounded-full text-white focus:outline-none bg-indigo-500 hover:bg-indigo-600">
+                              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12M6 12h12"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
+                        <p class="text-xs leading-3 text-gray-600 dark:text-white pt-2">옵션: {item.itemColor}</p>
+                        <div class="flex items-center justify-between pt-5">
+                          <div class="flex itemms-center">
+                            <p class="text-xs leading-3 underline text-gray-800 dark:text-white cursor-pointer">Add to favorites</p>
+                            <button onClick={() => deleteItem(item.cartItemId)} class="text-xs leading-3 underline text-red-500 pl-5 cursor-pointer">Remove</button>
+                          </div>
+                          <p class="text-base font-black leading-none text-gray-800 dark:text-white">{item.itemPrice}</p>
+                        </div>
                       </div>
-                    </div>
-                    <p class="text-xs leading-3 text-gray-600 dark:text-white pt-2">옵션: {item.itemColor}</p>
-                    <div class="flex items-center justify-between pt-5">
-                      <div class="flex itemms-center">
-                        <p class="text-xs leading-3 underline text-gray-800 dark:text-white cursor-pointer">Add to favorites</p>
-                        <button onClick={() => deleteItem(item.cartItemId)} class="text-xs leading-3 underline text-red-500 pl-5 cursor-pointer">Remove</button>
-                      </div>
-                      <p class="text-base font-black leading-none text-gray-800 dark:text-white">{item.itemPrice}</p>
                     </div>
                   </div>
                 </div>
@@ -194,13 +206,13 @@ function Cart() {
                     <p class="text-2xl leading-normal text-gray-800 dark:text-white">Total</p>
                     <p class="text-2xl font-bold leading-normal text-right text-gray-800 dark:text-white">{calculateTotal() + calculateShippingFee()}</p>
                   </div>
-                  <button onclick="checkoutHandler1(true)" class="text-base leading-none w-full py-5 bg-gray-800 border-gray-800 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white dark:hover:bg-gray-700">Checkout</button>
+                  <button onClick={handleOrder} class="text-base leading-none w-full py-5 bg-gray-800 border-gray-800 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white dark:hover:bg-gray-700">주문하기</button>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </div >
     </>
 
   );
