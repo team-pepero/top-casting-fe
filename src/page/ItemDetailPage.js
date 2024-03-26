@@ -26,7 +26,7 @@ const ItemDetailPage = () => {
             try {
                 // 여기서 `itemId`를 사용해 API 호출
                 const data = await HttpGet(
-                    `http://localhost:8080/api/v1/items/${itemId}`
+                    `/api/v1/items/${itemId}`
                 );
                 setItemDetail(data);
             } catch (error) {
@@ -45,7 +45,7 @@ const ItemDetailPage = () => {
 
         try {
             const response = await HttpPost(
-                "http://localhost:8080/api/v1/carts",
+                "/api/v1/carts",
                 itemToAdd
             );
 

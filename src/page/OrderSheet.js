@@ -59,7 +59,7 @@ const OrderSheet = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8080/api/v1/order', orderDetails);
+            const response = await axios.post(`${process.env.REACT_APP_BACK_URL}/api/v1/order`, orderDetails);
             console.log('Order added successfully:', response.data);
             const orderId = response.data.orderId;
             navigate(`/payment?orderId=${orderId}`);

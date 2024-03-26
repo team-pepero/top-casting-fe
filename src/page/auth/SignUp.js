@@ -45,7 +45,7 @@ function SignUp() {
   const handleSubmit = (e) => {
     e.preventDefault();
     // 회원가입 로직 처리
-    HttpPost('http://localhost:8080/api/v1/auth/join', formData)
+    HttpPost('/api/v1/auth/join', formData)
     .then( (response) => {
       alert("회원가입 성공")
       navigate("/login");
