@@ -21,7 +21,7 @@ const OrderDetail = () => {
         }
 
         try {
-            const response = await axios.get(`http://localhost:8080/api/v1/order/${orderId}`,{
+            const response = await axios.get(`${process.env.REACT_APP_BACK_URL}/api/v1/order/${orderId}`,{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
 				}
@@ -47,7 +47,7 @@ const OrderDetail = () => {
         }
 
 		try {
-		  const response = await axios.patch(`http://localhost:8080/api/v1/orders/${orderId}/refund`, {
+		  const response = await axios.patch(`${process.env.REACT_APP_BACK_URL}/api/v1/orders/${orderId}/refund`, {
 			orderStatus: orderStatus,
 		  }, {
 			headers: {

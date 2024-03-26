@@ -21,7 +21,7 @@ const OrderDetail = () => {
       return;
     }
         try {
-            const response = await axios.get(`http://localhost:8080/api/v1/admin/order/${orderId}`, {
+            const response = await axios.get(`${process.env.REACT_APP_BACK_URL}/api/v1/admin/order/${orderId}`, {
 				headers: {
 				  Authorization: `Bearer ${accessToken}`
 				}
@@ -43,7 +43,7 @@ const OrderDetail = () => {
     }
         try {
 			const paymentKey = orderDetail.paymentKey;
-            const response = await axios.delete(`http://localhost:8080/api/v1/admin/refund?paymentKey=${paymentKey}&cancelReason=hello`, {
+            const response = await axios.delete(`${process.env.REACT_APP_BACK_URL}/api/v1/admin/refund?paymentKey=${paymentKey}&cancelReason=hello`, {
                 orderId: orderDetail.orderId // 환불 요청 시 주문 ID를 본문에 포함시킵니다.
             }, {
 				headers: {

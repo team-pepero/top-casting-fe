@@ -19,7 +19,7 @@ const OrderList = () => {
       return;
     }
         try {
-			const response = await axios.get(`http://localhost:8080/api/v1/orders/refund`,{
+			const response = await axios.get(`${process.env.REACT_APP_BACK_URL}/api/v1/orders/refund`,{
 				headers: {
 				  Authorization: `Bearer ${accessToken}`
 				}

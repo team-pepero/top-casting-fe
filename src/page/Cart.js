@@ -34,7 +34,8 @@ function Cart() {
     }
 
     try {
-      const response = await axios.get(`http://localhost:8080/api/v1/carts`, {
+
+      const response = await axios.get(`${process.env.REACT_APP_BACK_URL}/api/v1/carts`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
@@ -50,7 +51,7 @@ function Cart() {
     const accessToken = Cookies.get("accessToken");
 
     try {
-      await axios.post(`http://localhost:8080/api/v1/carts/${id}`, { itemQuantity: quantity }, {
+      await axios.post(`${process.env.REACT_APP_BACK_URL}/api/v1/carts/${id}`, { itemQuantity: quantity }, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
@@ -65,7 +66,7 @@ function Cart() {
     const accessToken = Cookies.get("accessToken");
 
     try {
-      await axios.delete(`http://localhost:8080/api/v1/carts/${id}`, {
+      await axios.delete(`${process.env.REACT_APP_BACK_URL}/api/v1/carts/${id}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
