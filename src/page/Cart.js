@@ -50,6 +50,12 @@ function Cart() {
   const updateQuantity = async (id, quantity) => {
     const accessToken = Cookies.get("accessToken");
 
+    // 수량이 0보다 작아지지 않도록 검사
+    if (quantity <= 0) {
+      console.log("수량은 0 이하일 수 없습니다.");
+      return;
+    }
+
     try {
       await axios.post(`${process.env.REACT_APP_BACK_URL}/api/v1/carts/${id}`, { itemQuantity: quantity }, {
         headers: {
