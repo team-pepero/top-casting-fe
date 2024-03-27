@@ -1,10 +1,11 @@
 // ItemPage.js
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ItemList from '../component/ItemList';
 import Pagination from '../component/Pagination';
 import SearchBar from '../component/SearchBar';
-import CategoryBar from '../component/Categorybar'; // 파일 이름을 정확하게 맞춰줍니다.
+import { useNavigate } from 'react-router-dom';
 
 const ItemPage = () => {
   const [items, setItems] = useState([]);
@@ -12,6 +13,11 @@ const ItemPage = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [keyword, setKeyword] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(null); // 선택된 카테고리 상태
+  const navigate = useNavigate();
+
+  const handleMoreInfo = (itemId) => {
+    navigate(`/items/${itemId}`);
+  };
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -21,7 +27,7 @@ const ItemPage = () => {
 
         // 메인 카테고리가 선택되었을 때
         if (selectedCategory !== null) {
-          params.maincategory = selectedCategory;
+          params.mainCategoryId = selectedCategory;
         }
 
         const response = await axios.get(endpoint, { params });
@@ -43,22 +49,31 @@ const ItemPage = () => {
     setCurrentPage(currentPage + 1);
   };
 
-  const handleSearch = (searchKeyword) => {
-    setKeyword(searchKeyword);
-    setCurrentPage(0); // 검색 결과는 첫 페이지로 초기화
+  const handleSearch = async (searchKeyword) => {
+    try {
+      const response = await axios.get('http://localhost:8080/api/v1/items', {
+        params: { keyword: searchKeyword, page: 0, size: 20 }
+      });
+      setItems(response.data.content);
+      setTotalPages(response.data.totalPages);
+      setKeyword(searchKeyword);
+      setCurrentPage(0);
+    } catch (error) {
+      console.error('Error searching items:', error);
+    }
   };
 
-  // CategoryBar에서 선택된 카테고리를 처리하는 함수
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
-    setKeyword(''); // 선택된 카테고리와 함께 서브 카테고리 초기화
-    setCurrentPage(0); // 선택된 카테고리로 페이지를 초기화
+    setKeyword('');
+    setCurrentPage(0);
   };
 
   return (
     <>
       <SearchBar onSearch={handleSearch} />
-      <ItemList items={items} />
+      {/* <CategoryBar onSelect={handleCategorySelect} /> */} {/* CategoryBar 컴포넌트 제거 */}
+      <ItemList items={items} handleMoreInfo={handleMoreInfo} />
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
