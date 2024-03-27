@@ -16,12 +16,14 @@ const ItemDetailPage = () => {
 
     useEffect(() => {
         const fetchItemDetail = async () => {
+
             try {
-                // 여기서 `itemId`를 사용해 API 호출
-                const data = await HttpGet(
-                    `/api/v1/items/${itemId}`
-                );
+                const data = await HttpGet(`/api/v1/items/${itemId}`);
                 setItemDetail(data);
+                // itemDetail이 로드되면 selectedColor를 첫 번째 색상 옵션으로 설정
+                if (data.itemColors.length > 0) {
+                    setSelectedColor(data.itemColors[0].optionId);
+                }
             } catch (error) {
                 console.error("Error fetching item details:", error);
             }
