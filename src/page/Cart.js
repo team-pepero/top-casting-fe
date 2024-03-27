@@ -138,7 +138,7 @@ function Cart() {
 
         <div class="w-full absolute z-10 right-0 h-full overflow-x-hidden transform translate-x-0 transition ease-in-out duration-700" id="checkout">
           <div class="flex items-end lg:flex-row flex-col justify-end" id="cart">
-            <div class="lg:w-1/2 md:w-8/12 w-full lg:px-8 lg:py-14 md:px-6 px-4 md:py-8 py-4 bg-white dark:bg-gray-800 overflow-y-hidden overflow-x-hidden lg:h-screen h-auto" id="scroll">
+            <div class="lg:w-1/2 md:w-8/12 w-full lg:px-8 lg:py-14 md:px-6 px-4 md:py-8 py-4 bg-white dark:bg-gray-800  overflow-y-auto overflow-x-hidden lg:h-screen h-auto" id="scroll">
               <div class="flex items-center text-gray-500 hover:text-gray-600 dark:text-white cursor-pointer" onclick="checkoutHandler(false)">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -152,7 +152,7 @@ function Cart() {
                   <input placeholder="checkbox" type="checkbox" checked={selectedItems.includes(item.cartItemId)} onChange={(event) => handleCheckboxChange(event, item.cartItemId)} class="focus:opacity-100 checkbox cursor-pointer" />
                   <div class="md:w-4/12 2xl:w-1/4 w-full">
                     <img src={item.itemImage} alt={item.itemName} class="h-full object-center object-cover md:block hidden" />
-                    <img src="https://i.ibb.co/g9xsdCM/Rectangle-37.pngg" alt="Black Leather Bag" class="md:hidden w-full h-full object-center object-cover" />
+                    <img src={item.itemImage} alt={item.itemName} class="md:hidden w-full h-full object-center object-cover" />
                   </div>
                   <div class="md:pl-3 md:w-8/12 2xl:w-3/4 flex flex-col justify-center">
                     <div class="flex items-center">
