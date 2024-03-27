@@ -36,8 +36,8 @@ function PaymentPage(props) {
 			  orderId: orderId,
 			  orderName: '테스트 결제',
 			  customerName: '김토스',
-			  successUrl: `${process.env.REACT_APP_BACK_URL}/orderComplete`,
-              failUrl: `${process.env.REACT_APP_BACK_URL}/api/v1/payment/toss/fail`
+			  successUrl: `${process.env.REACT_APP_FRONT_URL}/orderComplete`,
+              failUrl: `${process.env.REACT_APP_FRONT_URL}/api/v1/payment/toss/fail`
 			})
 			.catch(function (error) {
 			  if (error.code === 'USER_CANCEL') {
