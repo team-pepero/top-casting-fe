@@ -18,8 +18,6 @@ function Cart() {
 
   useEffect(() => {
 
-
-
     if (!isLogin) {
       loginCheck();
     }
@@ -138,8 +136,8 @@ function Cart() {
 
         <div class="w-full absolute z-10 right-0 h-full overflow-x-hidden transform translate-x-0 transition ease-in-out duration-700" id="checkout">
           <div class="flex items-end lg:flex-row flex-col justify-end" id="cart">
-            <div class="lg:w-1/2 md:w-8/12 w-full lg:px-8 lg:py-14 md:px-6 px-4 md:py-8 py-4 bg-white dark:bg-gray-800  overflow-y-auto overflow-x-hidden lg:h-screen h-auto" id="scroll">
-              <div class="flex items-center text-gray-500 hover:text-gray-600 dark:text-white cursor-pointer" onclick="checkoutHandler(false)">
+            <div class="lg:w-1/2 md:w-8/12 w-full lg:px-8 lg:py-14 md:px-6 px-4 md:py-8 py-4 bg-white dark:bg-gray-800 overflow-y-auto overflow-x-hidden lg:h-screen h-auto" id="scroll">
+              <div class="flex items-center text-gray-500 hover:text-gray-600 dark:text-white cursor-pointer" onClick={() => navigate(-1)}>
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                   <polyline points="15 6 9 12 15 18" />
