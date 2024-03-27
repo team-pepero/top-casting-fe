@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 const OrderList = () => {
     const [orders, setOrders] = useState([]);
-	const navigate = useNavigate();
+    const navigate = useNavigate();
 
     useEffect(() => {
         getOrders();
     }, []);
 
-	const dropdownFunction = (element) => {
+    const dropdownFunction = (element) => {
         var dropdowns = document.getElementsByClassName("dropdown-content");
         var i;
         let list =
@@ -25,30 +25,32 @@ const OrderList = () => {
             }
         }
         list.classList.toggle("hidden");
-    }
+    };
 
     const getOrders = async () => {
-		const accessToken = Cookies.get("accessToken");
+        const accessToken = Cookies.get("accessToken");
 
         if (!accessToken) {
             navigate("/login");
             return;
         }
         try {
-            const response = await axios.get(`${process.env.REACT_APP_BACK_URL}/api/v1/orders`,{
-				headers: {
-					Authorization: `Bearer ${accessToken}`,
-				}
-			}
-		); 
-			console.log(response)// '/orders'는 백엔드 엔드포인트에 맞게 수정하세요.
+            const response = await axios.get(
+                `${process.env.REACT_APP_BACK_URL}/api/v1/orders`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                }
+            );
+            console.log(response); // '/orders'는 백엔드 엔드포인트에 맞게 수정하세요.
             setOrders(response.data);
         } catch (error) {
             console.error("주문 정보를 가져오는 데 실패했습니다:", error);
         }
     };
 
-	const getOrderItems = (order) => {
+    const getOrderItems = (order) => {
         const items = order.findOrderItemDtos;
         if (items.length == 1) {
             return items[0].itemName;
@@ -57,7 +59,7 @@ const OrderList = () => {
         }
     };
 
-	const handleOrderClick = (uuid) => {
+    const handleOrderClick = (uuid) => {
         navigate(`/order/${uuid}`);
     };
 
@@ -95,7 +97,8 @@ const OrderList = () => {
                     <div class="flex items-center">
                         <a
                             class="rounded-full focus:outline-none focus:ring-2  focus:bg-indigo-50 focus:ring-indigo-800"
-                            href=" javascript:void(0)" onClick={getOrders}
+                            href=" javascript:void(0)"
+                            onClick={getOrders}
                         >
                             <div class="py-2 px-8 bg-indigo-100 text-indigo-700 rounded-full">
                                 <p>All</p>
@@ -119,10 +122,11 @@ const OrderList = () => {
                         </p>
                     </button>
                 </div>
+
                 <div class="mt-7 overflow-x-auto">
-                    {orders.map((order) => (
-                        <div>
-                            <table class="w-full whitespace-nowrap">
+                    <div>
+                        <table class="w-full whitespace-nowrap">
+                            {orders.map((order) => (
                                 <tbody>
                                     <tr
                                         tabindex="0"
@@ -315,7 +319,14 @@ const OrderList = () => {
                                             </div>
                                         </td>
                                         <td class="pl-4">
-                                            <button class="focus:ring-2 focus:ring-offset-2 focus:ring-red-300 text-sm leading-none text-gray-600 py-3 px-5 bg-gray-100 rounded hover:bg-gray-200 focus:outline-none" onClick={() => handleOrderClick(order.orderId)}>
+                                            <button
+                                                class="focus:ring-2 focus:ring-offset-2 focus:ring-red-300 text-sm leading-none text-gray-600 py-3 px-5 bg-gray-100 rounded hover:bg-gray-200 focus:outline-none"
+                                                onClick={() =>
+                                                    handleOrderClick(
+                                                        order.orderId
+                                                    )
+                                                }
+                                            >
                                                 View
                                             </button>
                                         </td>
@@ -323,13 +334,19 @@ const OrderList = () => {
                                             <div class="relative px-5 pt-2">
                                                 <button
                                                     class="focus:ring-2 rounded-md focus:outline-none"
-                                                    onclick={() => dropdownFunction(this)}
+                                                    onclick={() =>
+                                                        dropdownFunction(this)
+                                                    }
                                                     role="button"
                                                     aria-label="option"
                                                 >
                                                     <svg
                                                         class="dropbtn"
-                                                        onclick={() => dropdownFunction(this)}
+                                                        onclick={() =>
+                                                            dropdownFunction(
+                                                                this
+                                                            )
+                                                        }
                                                         xmlns="http://www.w3.org/2000/svg"
                                                         width="20"
                                                         height="20"
@@ -377,9 +394,9 @@ const OrderList = () => {
                                         </td>
                                     </tr>
                                 </tbody>
-                            </table>
-                        </div>
-                    ))}
+                            ))}
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

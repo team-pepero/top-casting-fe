@@ -26,7 +26,7 @@ const AdminOrderList = () => {
             }
         }
         list.classList.toggle("hidden");
-    }
+    };
 
     const getOrderItems = (order) => {
         const items = order.findOrderItemDtos;
@@ -60,7 +60,7 @@ const AdminOrderList = () => {
         }
     };
 
-	const getRefundOrders = async () => {
+    const getRefundOrders = async () => {
         const accessToken = Cookies.get("accessToken");
 
         if (!accessToken) {
@@ -129,7 +129,8 @@ const AdminOrderList = () => {
                     <div class="flex items-center">
                         <a
                             class="rounded-full focus:outline-none focus:ring-2  focus:bg-indigo-50 focus:ring-indigo-800"
-                            href=" javascript:void(0)" onClick={getOrders}
+                            href=" javascript:void(0)"
+                            onClick={getOrders}
                         >
                             <div class="py-2 px-8 bg-indigo-100 text-indigo-700 rounded-full">
                                 <p>All</p>
@@ -137,7 +138,8 @@ const AdminOrderList = () => {
                         </a>
                         <a
                             class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 ml-4 sm:ml-8"
-                            href="javascript:void(0)" onClick={getRefundOrders}
+                            href="javascript:void(0)"
+                            onClick={getRefundOrders}
                         >
                             <div class="py-2 px-8 text-gray-600 hover:text-indigo-700 hover:bg-indigo-100 rounded-full ">
                                 <p>RefundRequest</p>
@@ -162,9 +164,9 @@ const AdminOrderList = () => {
                     </button>
                 </div>
                 <div class="mt-7 overflow-x-auto">
-                    {orders.map((order) => (
-                        <div>
-                            <table class="w-full whitespace-nowrap">
+                    <div>
+                        <table class="w-full whitespace-nowrap">
+                            {orders.map((order) => (
                                 <tbody>
                                     <tr
                                         tabindex="0"
@@ -357,7 +359,14 @@ const AdminOrderList = () => {
                                             </div>
                                         </td>
                                         <td class="pl-4">
-                                            <button class="focus:ring-2 focus:ring-offset-2 focus:ring-red-300 text-sm leading-none text-gray-600 py-3 px-5 bg-gray-100 rounded hover:bg-gray-200 focus:outline-none" onClick={() => handleOrderClick(order.orderId)}>
+                                            <button
+                                                class="focus:ring-2 focus:ring-offset-2 focus:ring-red-300 text-sm leading-none text-gray-600 py-3 px-5 bg-gray-100 rounded hover:bg-gray-200 focus:outline-none"
+                                                onClick={() =>
+                                                    handleOrderClick(
+                                                        order.orderId
+                                                    )
+                                                }
+                                            >
                                                 View
                                             </button>
                                         </td>
@@ -365,13 +374,19 @@ const AdminOrderList = () => {
                                             <div class="relative px-5 pt-2">
                                                 <button
                                                     class="focus:ring-2 rounded-md focus:outline-none"
-                                                    onclick={() => dropdownFunction(this)}
+                                                    onclick={() =>
+                                                        dropdownFunction(this)
+                                                    }
                                                     role="button"
                                                     aria-label="option"
                                                 >
                                                     <svg
                                                         class="dropbtn"
-                                                        onclick={() => dropdownFunction(this)}
+                                                        onclick={() =>
+                                                            dropdownFunction(
+                                                                this
+                                                            )
+                                                        }
                                                         xmlns="http://www.w3.org/2000/svg"
                                                         width="20"
                                                         height="20"
@@ -419,9 +434,9 @@ const AdminOrderList = () => {
                                         </td>
                                     </tr>
                                 </tbody>
-                            </table>
-                        </div>
-                    ))}
+                            ))}
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
