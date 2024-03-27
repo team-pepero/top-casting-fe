@@ -2,12 +2,17 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { HttpGet } from "../service/HttpService";
 import { HttpPost } from "../service/HttpService";
+import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
+
 
 const ItemDetailPage = () => {
     const { itemId } = useParams(); // URL에서 itemId 추출
     const [itemDetail, setItemDetail] = useState(null);
     const [quantity, setQuantity] = useState(1); // 수량 상태 관리
     const [selectedColor, setSelectedColor] = useState("");
+    const navigate = useNavigate();
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         const fetchItemDetail = async () => {
@@ -27,17 +32,21 @@ const ItemDetailPage = () => {
 
     const handleAddToCart = async () => {
         const itemToAdd = {
-            optionId: selectedColor, // ID of the selected color option
-            itemQuantity: quantity, // Quantity of the item to add
+            optionId: selectedColor,
+            itemQuantity: quantity,
         };
 
-        try {
-            const response = await HttpPost(
-                "/api/v1/carts",
-                itemToAdd
-            );
+        const accessToken = Cookies.get("accessToken");
 
+        if (!accessToken) {
+            navigate('/login');
+            return;
+        }
+
+        try {
+            const response = await HttpPost("/api/v1/carts", itemToAdd);
             console.log("Response from adding item to cart:", response);
+            setShowModal(true);
         } catch (error) {
             console.error("Failed to add item to cart:", error);
         }
@@ -51,6 +60,15 @@ const ItemDetailPage = () => {
     const handleQuantityChange = (event) => {
         setQuantity(Math.max(1, event.target.value)); // 수량은 최소 1 이상
     };
+
+    const handleSweetClick = () => {
+        navigate('/cart');
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
+
 
     if (!itemDetail) return <div>Loading...</div>;
 
@@ -79,7 +97,7 @@ const ItemDetailPage = () => {
                             <div class="mt-8 flex-col">
                                 <div>
                                     <select id="color-select" value={selectedColor} onChange={handleColorChange} class="border rounded-tl rounded-tr border-gray-300 p-4 w-full text-base leading-4 placeholder-gray-600 text-gray-600">
-                                        <option disabled selected>Color</option>
+                                        <option selected disabled>Color</option>
                                         {itemDetail.itemColors.map((color) => (
                                             <option key={color.optionId} value={color.optionId}>
                                                 {color.colorName}
@@ -97,6 +115,31 @@ const ItemDetailPage = () => {
 
                             <div class="flex items-center flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 lg:space-x-8 mt-8 md:mt-12">
                                 <button onClick={handleAddToCart} class="w-full md:w-3/5 border border-gray-800 text-base font-medium leading-none text-white uppercase py-6 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 bg-gray-800 text-white dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200">Add to Cart</button>
+                                {showModal && (
+                                    <div class="relative flex justify-center items-center">
+                                        <div id="menu" class="w-full h-full bg-gray-900 bg-opacity-80 top-0 fixed sticky-0">
+                                            <div class="2xl:container  2xl:mx-auto py-48 px-4 md:px-28 flex justify-center items-center">
+                                                <div class="w-96 md:w-auto dark:bg-gray-800 relative flex flex-col justify-center items-center bg-white py-16 px-4 md:px-24 xl:py-24 xl:px-36">
+                                                    <div role="banner"></div>
+                                                    <div class="mt-12">
+                                                        <h1 role="main" class="text-3xl dark:text-white lg:text-4xl font-semibold leading-7 lg:leading-9 text-center text-gray-800">장바구니로 이동하시겠습니까?</h1>
+                                                    </div>
+                                                    <div class="mt">
+                                                        <p class="mt-6 sm:w-80 text-base dark:text-white leading-7 text-center text-gray-800">장바구니에 상품이 담겼습니다.</p>
+                                                    </div>
+                                                    <button onClick={handleSweetClick} class="w-full dark:text-gray-800 dark:hover:bg-gray-100 dark:bg-white sm:w-auto mt-14 text-base leading-4 text-center text-white py-6 px-16 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 bg-gray-800 hover:bg-black">장바구니로 이동</button>
+                                                    <a href="javascript:void(0)" onClick={handleCloseModal} class="mt-6 dark:text-white dark:hover:border-white text-base leading-none focus:outline-none hover:border-gray-800 focus:border-gray-800 border-b border-transparent text-center text-gray-800">계속 쇼핑하기</a>
+                                                    <button onClick={handleCloseModal} class="text-gray-800 dark:text-gray-400 absolute top-8 right-8 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800" aria-label="close">
+                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M18 6L6 18" stroke="currentColor" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                                                            <path d="M6 6L18 18" stroke="currentColor" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div >
@@ -105,7 +148,6 @@ const ItemDetailPage = () => {
                     <img src={itemDetail.itemDetailedImageUrl} alt="Detailed view" class="mx-auto w-full h-full" />
                 </div>
             </div >
-
 
         </>
 
