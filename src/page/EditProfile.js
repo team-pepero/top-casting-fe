@@ -33,7 +33,7 @@ function EditProfile() {
 
 
         try {
-            const response = await axios.get(`http://localhost:8080/api/v1/members/${userInfo.no}`, {
+            const response = await axios.get(`${process.env.REACT_APP_BACK_URL}/api/v1/members/${userInfo.no}`, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
@@ -72,7 +72,7 @@ function EditProfile() {
         };
 
         try {
-            await axios.patch(`http://localhost:8080/api/v1/members/${userInfo.no}`, updateData, {
+            await axios.patch(`${process.env.REACT_APP_BACK_URL}/api/v1/members/${userInfo.no}`, updateData, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },

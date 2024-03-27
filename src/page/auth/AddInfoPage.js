@@ -54,7 +54,7 @@ const AddInfoPage = () => {
     e.preventDefault();
     // 회원가입 로직 처리
     console.log(formData);
-    HttpPost("http://localhost:8080/api/v1/auth/socialLogin/additionalInfo", formData)
+    HttpPost("/api/v1/auth/socialLogin/additionalInfo", formData)
       .then((response) => {
         alert("추가 정보 감사합니다.");
         navigate("/");

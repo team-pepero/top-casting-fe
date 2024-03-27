@@ -13,7 +13,6 @@ import Orders from './page/order/Orders';
 import OrderDetail from './page/order/OrderDetail';
 import Payment from './page/order/Payment'
 import OrderCompletePage from './page/order/OrderComletePage';
-import RequestRefundList from './page/order/RequestRefundList';
 import OrderDetailAdmin from './page/order/OrderDetailAdmin';
 import AdminOrderList from './page/order/AdminOrderList';
 import ItemListPage from './page/ItemListPage';
@@ -58,11 +57,6 @@ function App() {
                             element={<AdminOrderList />}
                         ></Route>{" "}
                         {/* 관리자 모든 주문 조회 */}
-                        <Route
-                            path="/RequestRefundList"
-                            element={<RequestRefundList />}
-                        ></Route>{" "}
-                        {/*환불 요청 리스트*/}
                         <Route
                             path="/requestRefundList/:orderId"
                             element={<OrderDetailAdmin />}

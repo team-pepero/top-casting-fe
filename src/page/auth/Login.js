@@ -28,7 +28,7 @@ function Login() {
     e.preventDefault();
     // 회원가입 로직 처리
     await apiInstance
-      .post("http://localhost:8080/api/v1/auth/login", credentials)
+      .post("/api/v1/auth/login", credentials)
       .then((response) => {
         const authorizationHeader = response.headers.authorization;
         const newAccessToken = authorizationHeader.replace("Bearer ", "");
@@ -83,18 +83,18 @@ function Login() {
           </Button>
 
           <SocialLoginButton
-            frontUrl="http://localhost:3000"
-            backUrl="http://localhost:8080"
+            frontUrl= {process.env.REACT_APP_FRONT_URL}
+            backUrl= {process.env.REACT_APP_BACK_URL}
             domain="google"
           />
           <SocialLoginButton
-            frontUrl="http://localhost:3000"
-            backUrl="http://localhost:8080"
+            frontUrl={process.env.REACT_APP_FRONT_URL}
+            backUrl={process.env.REACT_APP_BACK_URL}
             domain="naver"
           />
           <SocialLoginButton
-            frontUrl="http://localhost:3000"
-            backUrl="http://localhost:8080"
+            frontUrl={process.env.REACT_APP_FRONT_URL}
+            backUrl={process.env.REACT_APP_BACK_URL}
             domain="kakao"
           />
         </Stack>

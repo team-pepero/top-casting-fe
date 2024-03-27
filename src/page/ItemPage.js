@@ -22,7 +22,7 @@ const ItemPage = () => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        let endpoint = 'http://localhost:8080/api/v1/items';
+        let endpoint = `${process.env.REACT_APP_BACK_URL}/api/v1/items`;
         const params = { page: currentPage, size: 20 };
 
         // 메인 카테고리가 선택되었을 때
