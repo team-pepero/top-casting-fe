@@ -18,7 +18,7 @@ const MainPage = () => {
       const response = await axios.get(
         `${process.env.REACT_APP_BACK_URL}/api/v1/items`,
         {
-          params: { subcategory: categoryId },
+          params: { maincategory: categoryId },
         }
       );
       // 성공적으로 데이터를 받아온 후, 상품 목록 페이지로 네비게이션합니다.
@@ -33,15 +33,8 @@ const MainPage = () => {
     setSearchKeyword(event.target.value);
   };
 
-  const handleSearch = async () => {
-    if (!searchKeyword.trim()) return; // 키워드가 비어있는 경우 검색하지 않음
-    try {
-      const response = await axios.get(`items/search?query=${searchKeyword}`);
-      setSearchResults(response.data); // 검색 결과를 상태에 저장
-    } catch (error) {
-      console.error("검색 중 에러 발생", error);
-      setSearchResults([]);
-    }
+  const handleSearch = () => {
+    navigate(`/itemPage?keyword=${searchKeyword}`);
   };
 
   return (
@@ -55,12 +48,12 @@ const MainPage = () => {
             class="w-full h-full absolute z-0 hidden xl:block"
           />
           <img
-            src="https://i.ibb.co/bbS3J9C/pexels-max-vakhtbovych-6301182-1.png"
+            src={Banner}
             alt="dining"
             class="w-full h-full absolute z-0 hidden sm:block xl:hidden"
           />
           <img
-            src="https://i.ibb.co/JKkzGDs/pexels-max-vakhtbovych-6301182-1.png"
+            src={Banner}
             alt="dining"
             class="w-full h-full absolute z-0 sm:hidden"
           />
@@ -75,10 +68,10 @@ const MainPage = () => {
             <div class="sm:border border-white flex-col sm:flex-row flex items-center lg:w-5/12 w-full mt-12 space-y-4 sm:space-y-0">
               <input
                 type="text"
-                value={searchKeyword}
-                onChange={handleInputChange}
                 class="border border-white sm:border-transparent text-base w-full font-medium leading-none text-white p-4 focus:outline-none bg-transparent placeholder-white"
-                placeholder="찾으시는 상품명을 입력해 주세요"
+                placeholder="찾으시는 상품명을 입력해주세요"
+                value={searchKeyword}
+                onChange={(e) => setSearchKeyword(e.target.value)}
               />
               <button
                 onClick={handleSearch}
@@ -122,7 +115,7 @@ const MainPage = () => {
         </div>
 
         <div class="group group-hover:bg-opacity-60 transition duration-500 relative bg-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 sm:p-28 py-36 px-10 flex justify-center items-center">
-          <div onClick={() => fetchProductsByCategory(5)}>
+          <div onClick={() => fetchProductsByCategory(2)}>
             {" "}
             {/* 카테고리 ID 5로 가정 */}
             <img
@@ -151,7 +144,7 @@ const MainPage = () => {
         </div>
 
         <div class="group group-hover:bg-opacity-60 transition duration-500 relative bg-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 sm:p-28 py-36 px-10 flex justify-center items-center">
-          <div onClick={() => fetchProductsByCategory(8)}>
+          <div onClick={() => fetchProductsByCategory(3)}>
             {" "}
             {/* 카테고리 ID 8로 가정 */}
             <img
@@ -177,13 +170,13 @@ const MainPage = () => {
         </div>
 
         <div class="group group-hover:bg-opacity-60 transition duration-500 relative bg-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 sm:p-28 py-36 px-10 flex justify-center items-center">
-          <Link to={`/items/4`}>
+          <div onClick={() => fetchProductsByCategory(4)}>
             <img
               class="group-hover:opacity-60 transition duration-500"
               src={Scartbait}
               alt="sofa-5"
             />
-          </Link>
+          </div>
           <div class="absolute sm:top-8 top-4 left-4 sm:left-8 flex justify-start items-start flex-col space-y-2">
             <div>
               <div class="flex flex-col justify-center">

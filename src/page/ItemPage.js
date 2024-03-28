@@ -6,6 +6,7 @@ import ItemList from '../component/ItemList';
 import Pagination from '../component/Pagination';
 import SearchBar from '../component/SearchBar';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const ItemPage = () => {
   const [items, setItems] = useState([]);
@@ -14,12 +15,22 @@ const ItemPage = () => {
   const [keyword, setKeyword] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(null); // 선택된 카테고리 상태
   const navigate = useNavigate();
+  const location = useLocation();
+  const urlParams = new URLSearchParams(location.search);
+  const keywordFromUrl = urlParams.get('keyword');
 
   const handleMoreInfo = (itemId) => {
     navigate(`/items/${itemId}`);
   };
 
   useEffect(() => {
+    if (keywordFromUrl) {
+      handleSearch(keywordFromUrl);
+    }
+  }, [keywordFromUrl]);
+
+  useEffect(() => {
+
     const fetchItems = async () => {
       try {
         let endpoint = `${process.env.REACT_APP_BACK_URL}/api/v1/items`;

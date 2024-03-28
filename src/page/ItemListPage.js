@@ -16,22 +16,22 @@ const ItemListPage = () => {
 
   useEffect(() => {
     setItems(initialItems.content); // 초기 아이템 설정
-    console.log(JSON.stringify(initialItems, null, 2)); 
+    console.log(JSON.stringify(initialItems, null, 2));
   }, [initialItems]);
 
   const handleMoreInfo = (itemId) => {
     navigate(`/items/${itemId}`);
   };
 
-   // 초기 렌더링을 체크하기 위한 ref
-   const isInitialRender = useRef(true);
+  // 초기 렌더링을 체크하기 위한 ref
+  const isInitialRender = useRef(true);
 
-   useEffect(() => {
-     // 초기 렌더링 시에는 아무것도 하지 않고 반환합니다.
-     if (isInitialRender.current) {
-       isInitialRender.current = false;
-       return;
-     }
+  useEffect(() => {
+    // 초기 렌더링 시에는 아무것도 하지 않고 반환합니다.
+    if (isInitialRender.current) {
+      isInitialRender.current = false;
+      return;
+    }
 
     const fetchItems = async () => {
       try {
@@ -88,30 +88,31 @@ const ItemListPage = () => {
   return (
     <>
       <SearchBar onSearch={handleSearch} />
-      <div className="mx-auto container py-8 font-poppins">
-      <div className="flex flex-wrap justify-center gap-8 mx-auto py-8 font-poppins">
-        {items.map((item, index) => (
-          <div
-            key={index}
-            onClick={() => handleMoreInfo(item.itemId)}
-            className="bg-white rounded-xl overflow-hidden shadow-md cursor-pointer relative"
-            style={{ width: '300px' }}
-          >
-            <img
-              alt={`Item ${index}`}
-              src={item.imageUrl}
-              className="w-full object-cover"
-            />
-            <div className="absolute top-0 left-0 w-full h-full bg-gray-300 opacity-10"></div> {/* 회색 오버레이 추가 */}
-            <div className="absolute top-0 left-0 w-full h-full bg-gray-300 opacity-0 transition-opacity duration-300 hover:opacity-30"></div>
-            <div className="p-6 z-10 relative">
-              <div className="font-bold text-xl mb-2">{item.itemName}</div>
-              <p className="text-gray-700 text-lg mb-4">₩{item.itemPrice}</p>
+      <div className="mx-auto container py-2 font-poppins">
+        <div className="flex flex-wrap justify-center gap-8 mx-auto py-8 font-poppins">
+          {items.map((item, index) => (
+            <div
+              key={index}
+              onClick={() => handleMoreInfo(item.itemId)}
+              className="bg-white rounded-xl overflow-hidden shadow-md cursor-pointer relative"
+              style={{ width: '300px' }}
+            >
+              <img
+                alt={`Item ${index}`}
+                src={item.imageUrl}
+                className="w-full object-cover"
+              />
+              <div className="absolute top-0 left-0 w-full h-full bg-gray-300 opacity-10"></div> {/* 회색 오버레이 추가 */}
+              <div className="absolute top-0 left-0 w-full h-full bg-gray-300 opacity-0 transition-opacity duration-300 hover:opacity-30"></div>
+              <div className="p-6 z-10 relative">
+                <div className="font-bold text-xl mb-2">{item.itemName}</div>
+                <p className="text-gray-700 text-lg mb-4">₩{item.itemPrice}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
@@ -120,7 +121,7 @@ const ItemListPage = () => {
         onPageChange={handlePageChange}
       />
     </>
-  );  
+  );
 };
 
 export default ItemListPage;
