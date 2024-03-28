@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Container, TextField, Button, Typography, Grid, imageListClasses } from '@mui/material';
+import { Container, TextField, Typography, Grid, imageListClasses } from '@mui/material';
 import { HttpPost } from '../../service/HttpService';
 import DaumPostcode from 'react-daum-postcode';
 import { useNavigate } from 'react-router-dom';
+import { Button } from 'react-daisyui';
 
 function SignUp() {
   const navigate = useNavigate();
@@ -60,9 +61,8 @@ function SignUp() {
 
   return (
     <Container component="main" maxWidth="xs">
-      <Typography component="h1" variant="h5" marginBottom="20px">
-        Sign up
-      </Typography>
+      <p className="lg:text-4xl text-3xl font-black leading-9 text-gray-800 dark:text-white mb-3 mt-3">Sign up</p>
+
       {isOpen && (
               <div style={{
                 display: 'flex',
@@ -224,12 +224,11 @@ function SignUp() {
           </Grid>
           <Grid item xs={12}>
             <Button
+              className="text-base leading-none w-full bg-gray-800 border-gray-800 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white dark:hover:bg-gray-700"
               type="submit"
-              fullWidth
               variant="contained"
-              color="primary"
             >
-              Sign Up
+              회원가입
             </Button>
           </Grid>
         </Grid>
