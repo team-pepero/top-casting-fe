@@ -21,6 +21,7 @@ import ItemDetailPage from "./page/ItemDetailPage";
 import EditProfile from "./page/EditProfile";
 import MyPage from "./page/MyPage";
 import NavBar from './component/NavBar';
+import Admin from './page/Admin';
 
 function App() {
     return (
@@ -30,6 +31,7 @@ function App() {
                     <NavBar></NavBar>
                     {/* <CategoryBar></CategoryBar> */}
                     <Routes>
+                        <Route path="/admin" element={<Admin />}></Route>
                         <Route path="/" element={<MainPage />}></Route>
                         <Route path="/join" element={<SignUp />}></Route>
                         <Route path="/login" element={<Login />}></Route>
