@@ -20,14 +20,15 @@ import AddInfoPage from "./page/auth/AddInfoPage";
 import ItemDetailPage from "./page/ItemDetailPage";
 import EditProfile from "./page/EditProfile";
 import MyPage from "./page/MyPage";
+import NavBar from './component/NavBar';
 
 function App() {
     return (
         <>
             <Router>
                 <LoginContextProvider>
-                    <Navibar></Navibar>
-                    <CategoryBar></CategoryBar>
+                    <NavBar></NavBar>
+                    {/* <CategoryBar></CategoryBar> */}
                     <Routes>
                         <Route path="/" element={<MainPage />}></Route>
                         <Route path="/join" element={<SignUp />}></Route>
