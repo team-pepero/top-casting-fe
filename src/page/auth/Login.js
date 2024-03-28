@@ -1,10 +1,11 @@
 import React, { useState, useContext } from "react";
-import { Container, TextField, Button, Typography, Stack } from "@mui/material";
+import { Container, TextField, Typography, Stack } from "@mui/material";
 import apiInstance from "../../service/HttpService";
 import { LoginContext } from "../../contexts/LoginContextProvider";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import SocialLoginButton from "../../component/SocialLoginButton";
+import { Button } from "react-daisyui";
 
 function Login() {
   const navigate = useNavigate();
@@ -46,9 +47,7 @@ function Login() {
 
   return (
     <Container component="main" maxWidth="xs">
-      <Typography component="h1" variant="h5">
-        Sign in
-      </Typography>
+      <p className="lg:text-4xl text-3xl font-black leading-9 text-gray-800 dark:text-white mb-3 mt-3">LogIn</p>
       <form onSubmit={handleSubmit} noValidate>
         <TextField
           variant="outlined"
@@ -78,11 +77,16 @@ function Login() {
         />
 
         <Stack spacing={2} sx={{ width: "100%" }}>
-          <Button type="submit" fullWidth variant="contained" color="primary">
-            Sign In
-          </Button>
-
-          <SocialLoginButton
+        <Button
+              className="text-base leading-none w-full bg-gray-800 border-gray-800 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white dark:hover:bg-gray-700"
+              type="submit"
+              variant="contained"
+            >
+              LogIn
+            </Button>
+        </Stack>
+      </form>
+      <SocialLoginButton
             frontUrl= {process.env.REACT_APP_FRONT_URL}
             backUrl= {process.env.REACT_APP_BACK_URL}
             domain="google"
@@ -97,8 +101,6 @@ function Login() {
             backUrl={process.env.REACT_APP_BACK_URL}
             domain="kakao"
           />
-        </Stack>
-      </form>
     </Container>
   );
 }
