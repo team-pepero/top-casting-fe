@@ -92,6 +92,7 @@ const NavBar = () => {
             </div>
 
             <ul className="pr-12 xl:flex items-center h-full space-x-4 hidden">
+            <div className="btn btn-ghost btn-circle w-auto"><Link to="/itemPage" className="btn btn-ghost btn-circle w-auto">전체상품</Link></div>
               {Object.entries(mainCategories).map(
                 ([category, details], index) => (
                   <div key={category} className="dropdown dropdown-hover">
